@@ -15,9 +15,11 @@ https://trello.com/b/jc3jXuiw/rbrs-raidroleplay
 https://discord.gg/K2GKHbUgaf
 
 # Project release links:
-https://www.roblox.com/library/5069640192/raidRoleplay - Standard Edition
-https://www.roblox.com/library/5802383470/raidRoleplay-Developer-Branch - Developer Branch (faster updates, less reliability)
-https://www.roblox.com/library/5804626696/raidRoleplay-Updater - Updater Plugin
+https://www.roblox.com/library/5069640192/raidRoleplay -Standard Edition
+
+https://www.roblox.com/library/5802383470/raidRoleplay-Developer-Branch -Developer Branch (faster updates, less reliability)
+
+https://www.roblox.com/library/5804626696/raidRoleplay-Updater -Updater Plugin
 
 
 DEVELOPERS:
