@@ -1,6 +1,6 @@
 # RBRS - r_aidmaster's Roleplay and Build Suite
 
-<img src="RBRSTopImage.png" alt="RBRS Frame" width="800" height="220" align="center" />
+<img src="RBRSTopImage.png" alt="RBRS Frame" width="614" height="176"/>
 
 --- INDEV ---
 
