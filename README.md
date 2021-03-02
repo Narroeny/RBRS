@@ -1,5 +1,4 @@
-# RBRS
-r_aidmaster's Roleplay and Build Suite
+# RBRS - r_aidmaster's Roleplay and Build Suite / raidRoleplay
 
 NOTE: 1.x branch is officially out of full development, as efforts have shifted towards the much more advanced 2.x. There is very likely to be any new feature updates to 1.x.
 
