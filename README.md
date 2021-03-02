@@ -1,5 +1,7 @@
 # RBRS - r_aidmaster's Roleplay and Build Suite
 
+<img src="RBRSTopImage.png" alt="RBRS Frame" width="800" height="220" align="center" />
+
 --- INDEV ---
 
 r_aidmaster's Roleplay and Build Suite is an open-source UI and F3X modification framework that provides a multitude of features that range from essential to convenient for games that are based around building and/or roleplaying.
