@@ -101,7 +101,7 @@ other modules inside of the RBRS installation.
 The first argument is the name of the function, 
 The second argument is the function that will be called
 The third argument is the priority (which will control what functions overwrite what). This will default to 1.
-The last number is an internal variable used when initing required modules that are parented to Core, and is not needed by other
+The last string is an internal variable used when initing required modules that are parented to Core, and is not needed by other
 modules.
 
 nil Core:waitForRequirements(variant)

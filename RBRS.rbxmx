@@ -1,0 +1,2579 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<Meta name="ExplicitAutoJoints">true</Meta>
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Script" referent="RBXF05448EC465948E38940C18FEEBF5F31">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="Disabled">false</bool>
+			<Content name="LinkedSource"><null></null></Content>
+			<string name="Name">RBRS</string>
+			<string name="ScriptGuid">{6173D0EE-F5C0-470A-B374-903AB32BF4C4}</string>
+			<ProtectedString name="Source"><![CDATA[-- Welcome to raidRoleplay 2.0 (now called "r_aidmaster's Build and Roleplay Suite"
+
+--[[
+INSTALLATION INSTRUCTIONS:
+EASY:
+For easy installation, install/update the RBRS Setup Tool, which will help automatically configure your RBRS installation.
+https://www.roblox.com/library/5804626696/raidRoleplay-Updater
+
+ADVANCED:
+Configuration options for modules should be directly parented to the module itself. Go through each module, and find the configuration
+option inside of it.
+
+For extra help, see the bottom of the Dev Forum post, which can be found in the description of the model.
+(There are very strange limitations on how the dev forum link can be posted)
+]]
+
+local Assets = script:WaitForChild("Assets")
+local Client = Assets:WaitForChild("RBRSClient")
+local Modules = script:WaitForChild("Modules")
+
+local assetFold = Instance.new("Folder", game:GetService("ReplicatedStorage"))
+assetFold.Name = "RBRS"
+
+local envFolder = Instance.new("Folder", assetFold)
+envFolder.Name = "Environment"
+
+for _, v in pairs(script:GetChildren()) do
+	v.Parent = assetFold
+end
+
+Client.Parent = game:GetService("StarterPlayer"):WaitForChild("StarterCharacterScripts")
+
+local Core = require(Assets:WaitForChild("Core"))
+Core:init(Modules)]]></ProtectedString>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+		<Item class="Folder" referent="RBX7FA4D037472844CF85033A4BE8C458A5">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">Assets</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="LocalScript" referent="RBX24BD0B9FF21F4AE9B3BB65C638BBF10C">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">RBRSClient</string>
+					<string name="ScriptGuid">{F0AC578F-3702-411A-9516-4FEFA2A8EC67}</string>
+					<ProtectedString name="Source"><![CDATA[local RBRSFold = game:GetService("ReplicatedStorage"):WaitForChild("RBRS")
+local modules = RBRSFold:WaitForChild("Modules")
+local core = RBRSFold:WaitForChild("Assets"):WaitForChild("Core")
+require(core):init(modules)]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBXD08EC6655E404C0E80576129C3EC016C">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Core</string>
+					<string name="ScriptGuid">{97C3F9AD-BA48-49FC-9F56-924EBFBFCAE0}</string>
+					<ProtectedString name="Source"><![CDATA[local Core = {}
+Core.Version = "2.0.0.dev"
+
+local runService = game:GetService("RunService")
+
+Core.ProtectedFunctions = {}
+Core.Functions = {}
+Core.References = {}
+Core.LoadedModules = {}
+
+Core.script = script
+Core.Environment = script:FindFirstAncestor("RBRS"):WaitForChild("Environment")
+Core.env = Core.Environment -- add an alias
+
+setmetatable(Core, Core)
+
+Core.__index = function(self, ind)
+	if Core.ProtectedFunctions[ind] ~= nil then
+		return Core.ProtectedFunctions[ind]
+	elseif Core.Functions[ind] ~= nil then
+		return Core.Functions[ind]["Function"]
+	else
+		warn(ind)
+		error(Core.getCallingScript(getfenv()).. " attempted to call a value of Core that doesn't exist. (" .. ind .. ")")
+	end
+end
+
+function Core.ProtectedFunctions:waitForRequirements(reqs)
+	if typeof(reqs) ~= "table" then
+		reqs = {reqs}
+	end
+	for ind, val in pairs(reqs) do
+		local isHardRequirement = true
+		local funcName = val
+		if tonumber(ind) == nil then
+			isHardRequirement = val
+			funcName = ind
+		end
+		coroutine.wrap(function()
+			wait(5)
+			if self.Functions[funcName] == nil then
+				if not isHardRequirement then
+					self:addFunction(funcName, function(...) return 0 end, -1000, "STUB FUNCTION")
+					warn("Failed to get " .. funcName .. ". Adding stub function.")
+				else
+					warn("Failing to get " .. funcName ..  " - Continuing to yield.")
+				end
+			end
+		end)()
+		while self.Functions[funcName] == nil do
+			self.Functions.Changed:Wait()
+		end
+	end
+end
+
+function Core.ProtectedFunctions:getGlobal(name)
+	if Core.References[name] ~= nil then
+		return nil, 0
+	else
+		return Core.References[name]["Value"], Core.References[name]["Priority"]
+	end
+end
+
+function Core.ProtectedFunctions:setGlobal(name, value, priority)
+	if priority == true then
+		if Core.References[name] ~= nil and Core.References[name]["Priority"] ~= nil then
+			priority = Core.References[name]["Priority"]
+		else
+			priority = 1
+		end
+	end
+	
+	assert(name == "string", "Global name was not valid from " .. self.getCallingScript(getfenv()))
+	assert(priority == "number" or priority == nil, "Invalid priority from " .. self.getCallingScript(getfenv()) .. " for " .. name)
+	
+	Core.References[name] = { -- this is also wrapped into a PriorityTable
+		["Priority"] = priority,
+		["Value"] = value,
+	}
+end
+
+local function sget(mod, name)
+	local ret = nil
+	local succ, err = pcall(function()
+		ret = rawget(mod, name)
+	end)
+	return ret
+end
+
+function Core.ProtectedFunctions:initMod(Module)
+	if Module:IsA("ModuleScript") then
+		local mod = require(Module)
+		-- but if rawget [ind] doesn't exist then it errors so pcall spam
+		-- also the requirement calls shouldn't error but we check just incase
+		local init = sget(mod, "init")
+		local server = sget(mod, "server")
+		local client = sget(mod, "client")
+		
+		if init or server or client then
+			if self.LoadedModules[Module.Name] then
+				warn("Replacing an entry " .. Module.Name .. " because another module has the same name.")
+			end
+			self.LoadedModules[Module.Name] = mod
+			if sget(mod, "InitRequirements") then  -- we have to pcall all of these because metamethods may call metamethod spam
+				self:waitForRequirements(mod.InitRequirements)
+			end
+			if init then
+				init(self)
+			end
+			-- now we call server/client specific
+			if runService:IsServer() and server then
+				if sget(mod, "ServerRequirements") then
+					self:waitForRequirements(mod.ServerRequirements)
+				end
+				server(self)
+			elseif (not runService:IsServer()) and client then
+				if sget(mod, "ClientRequirements") then
+					self:waitForRequirements(mod.ClientRequirements)
+				end
+				client(self)
+			end
+		end
+	end
+end
+
+function Core.ProtectedFunctions:init(moduleFolder)
+	-- Core has a requirement for Utility, so we init that first.
+	local priorityTable = script:WaitForChild("PriorityTable")
+	local utility = script:WaitForChild("Utility")
+	self.Functions = {}
+	self.References = {}
+	self.LoadedModules = {}
+	
+	self:initMod(priorityTable)
+	self.wrapPriorityTable(self.Functions)
+	self.wrapPriorityTable(self.References)
+	self:initMod(utility)
+	
+	if runService:IsClient() then
+		Core.ClientEnvironment = self.getClientScript()
+		Core.clientenv = self.ClientEnvironment
+	end
+	
+	local modules = moduleFolder:GetDescendants()
+	
+	for _, mod in pairs(moduleFolder:GetDescendants()) do
+		if runService:IsStudio() then
+			spawn(function()
+				self:initMod(mod)
+			end)
+		else -- We do this because coroutine messes up output errors, and so we use spawn in studio
+			coroutine.wrap(function()
+				self:initMod(mod)
+			end)()
+		end
+	end
+end
+
+function Core.ProtectedFunctions:addFunction(functionName, func, priority, srcScript) -- Ensures that add Function is called properly, 
+	-- and then determines which function should take priority.
+	if srcScript == nil then
+		srcScript = "FAILED TO GET FUNCTION SOURCE"
+		pcall(function()
+			srcScript = getfenv(func).script:GetFullName()
+		end)
+	end
+	assert(typeof(functionName) == "string", srcScript .. " provided an invalid function name.")
+	assert(typeof(priority) == "number" or priority == nil, srcScript .. " provided an invalid priority.")	
+	assert(typeof(func) == "function", srcScript .. " provided an invalid function.")	
+	
+	self.Functions[functionName] = {
+		["Priority"] = priority,
+		["Function"] = func,
+		["srcScript"] = srcScript,
+	} -- The Functions table is wrapped by the PriorityTable module
+end
+
+function Core.ProtectedFunctions:runFunctionWhenAvailable(name, ...)
+	while self.Functions[name] == nil do
+		self.Functions.Changed:Wait()
+	end
+	return self.Functions[name](...)
+end
+
+return Core
+]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+				<Item class="ModuleScript" referent="RBX80049B45F5C8411EA0B8E9D329FABFC9">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">PriorityTable</string>
+						<string name="ScriptGuid">{43894682-2081-4B38-B512-2A6EA3137982}</string>
+						<ProtectedString name="Source"><![CDATA[local PriorityTable = {}
+
+PriorityTable.__index = function(self, ind)
+	if self.trueValues[ind] ~= nil and self.trueValues[ind]["__nonTable"] ~= nil then
+		return self.trueValues[ind]["Value"]
+	elseif self.trueValues[ind] ~= nil then
+		return self.trueValues[ind]
+	else
+		return PriorityTable[ind]
+	end
+end
+
+PriorityTable.__newindex = function(self, ind, newEntry)
+	local curEntry = self.trueValues[ind]
+	
+	if typeof(newEntry) == "table" and newEntry["Priority"] == nil then
+		newEntry["Priority"] = 1
+	end
+	-- perform comparisons
+	-- this could be one if statement but that would be ugly and kinda confusing
+	if typeof(newEntry) ~= "table" then -- we make a special flag to return this value only, since that's prob what they are expecting
+		self.trueValues[ind] = {
+			["Value"] = newEntry,
+			["__nonTable"] = true,
+			["Priority"] = 1,
+		}
+	elseif curEntry == nil or newEntry["Priority"] == nil or curEntry["Priority"] == nil or curEntry["Priority"] <= newEntry["Priority"] then
+		if self.__multipleValues and self.__isBaseTable then
+			if self.trueValues[ind] == nil then
+				self.trueValues[ind] = {}
+			end
+			table.insert(self.trueValues[ind], newEntry)
+		else
+			self.trueValues[ind] = newEntry
+		end
+	else
+		return
+	end
+	self.__changed:Fire(ind, newEntry)
+end
+
+function PriorityTable:replace(index, val)
+	assert(not self.__multipleValues, "Can not use :replace() with a MultipleValues table.")
+	local priority = 1
+	if self.trueValues[index] ~= nil and self.trueValues[index]["Priority"] then
+		priority = self.trueValues[index]["Priority"]
+	end
+	if typeof(val) ~= "table" then
+		val = {
+			val,
+			["Priority"] = priority,
+		}
+	else
+		val["Priority"] = priority
+	end
+	self.trueValues[index] = val
+end
+
+function PriorityTable:getpriority(index, numIndex)
+	if self.trueValues[index] then
+		if self.__multipleValues and numIndex ~= nil and self.trueValues[index][numIndex] then
+			return self.trueValues[index][numIndex]["Priority"]
+		elseif self.trueValues[index]["Priority"] then
+			return self.trueValues[index]["Priority"]
+		end
+	end
+end
+
+function PriorityTable:sort(ind)
+	assert(self.trueValues[ind], "Index does not exist in trueValues")
+	table.sort(self.trueValues[ind], function(a, b)
+		if a["Priority"] ~= nil and (b["Priority"] == nil or a.Priority > b.Priority) then
+			return true
+		else
+			return false
+		end
+	end)
+end
+
+function PriorityTable:get(ind)
+	assert(self.__multipleValues, "Can not use :get() with a nonMultipleValues table.")
+	if self.trueValues[ind] == nil then
+		return {}
+	end
+	local retTab = {}
+	for i, v in pairs(self.trueValues[ind]) do
+		if typeof(v) == "table" then
+			if v.__nonTable == nil then
+				retTab[i] = v
+			else
+				retTab[i] = v["Value"]
+			end
+		end
+	end
+
+	return retTab
+end
+
+function PriorityTable:rawget(ind)
+	assert(self.__multipleValues, "Can not use :rawget() with a nonMultipleValues table.")
+	if self.trueValues[ind] == nil then
+		return {}
+	end
+	local retTab = {}
+	for i, v in pairs(self.trueValues[ind]) do
+		if typeof(v) == "table" then
+			retTab[i] = v
+		end
+	end
+	return retTab
+end
+
+function PriorityTable:remove(ind, index)
+	assert(self.__multipleValues, "Can not use :remove() with a nonMultipleValues table.")
+	assert(typeof(index) == "number" or typeof(index) == "table", "Second argument (index) must be a number or array.")
+	assert(self.trueValues[ind], "Index does not exist in trueValues")
+	if typeof(index) == "number" then
+		table.remove(self.trueValues[ind], index)
+	elseif typeof(index) == "table" then
+		table.sort(index)
+		local currentOffset = 0
+		for _, val in pairs(index) do
+			table.remove(self.trueValues[ind], val - currentOffset)
+			currentOffset += 1
+		end
+	end
+	self:sort(ind)
+end
+
+function PriorityTable:set(ind, index, val)
+	assert(self.__multipleValues, "Can not use :set() with a nonMultipleValues table.")
+	assert(typeof(index) == "number", "Second argument (index) must be a number.")
+	if self.trueValues[ind] == nil then
+		self.trueValues[ind] = {}
+	end
+	local priority = 1
+	local currentEntry = rawget(self.trueValues[ind], index)
+	
+	if currentEntry ~= nil and typeof(currentEntry) == "table" and currentEntry["Priority"] ~= nil then
+		priority = currentEntry["Priority"]
+	end
+	
+	if typeof(val) == "table" and val["Priority"] == nil then
+		val["Priority"] = priority
+	elseif typeof(val) ~= "table" then
+		val = {
+			["Value"] = val,
+			["__nonTable"] = true,
+			["Priority"] = priority,
+		}
+	end
+	
+	self.trueValues[ind][index] = val
+	self:sort(ind)
+end
+
+function PriorityTable:insert(ind, value)
+	assert(self.__multipleValues, "Can not use :insert() with a nonMultipleValues table.")
+	if self.trueValues[ind] == nil then
+		self.trueValues[ind] = {}
+	end
+	self:set(ind, #self.trueValues[ind] + 1, value)
+end
+
+function PriorityTable:findfromval(ind, value, valueName, returnmult)
+	assert(self.__multipleValues, "Can not use :findfromval() with a nonMultipleValues table.")
+	if not self.trueValues[ind] then
+		return nil
+	end
+	if valueName == nil then
+		valueName = "Value"
+	end
+	
+	local toret = {}
+	for i, v in pairs(self.trueValues[ind]) do
+		if typeof(v) == "table" and v[valueName] ~= nil and v[valueName] == value then
+			if returnmult then
+				table.insert(toret, i)
+			else
+				return i	
+			end
+		end
+	end
+	
+	if returnmult then
+		return toret
+	end
+end
+
+function PriorityTable.init(core)
+	core:addFunction("wrapPriorityTable", function(tab, multipleVals)
+		tab.trueValues = {} -- create our TrueFunctions tab
+
+		for i, v in pairs(tab) do -- Copy existing values over to our trueFunctions table and remove anything else
+			if i ~= "trueValues" then
+				if typeof(v) ~= "table" then
+					v = {
+						["Value"] = v,
+						["Priority"] = 1,
+						["__nonTable"] = true,
+					}
+				end
+				if not multipleVals then
+					tab.trueValues[i] = v
+				else
+					if tab.trueValues[i] == nil then
+						tab.trueValues[i] = {}
+						tab.trueValues[i].__multipleValues = true
+					end
+					table.insert(tab.trueValues[i], v)
+				end
+				tab[i] = nil
+			end
+		end
+		
+		tab.__changed = Instance.new("BindableEvent")
+		tab.Changed = tab.__changed.Event
+		
+		if multipleVals then
+			tab.__multipleValues = true -- this is for the base table
+			tab.__isBaseTable = true
+			setmetatable(tab, PriorityTable)
+			for i, _ in pairs(tab.trueValues) do
+				tab:sort(i)
+			end
+		else
+			setmetatable(tab, PriorityTable)
+		end
+	end, 1, script:GetFullName())
+end
+
+PriorityTable["Description"] = "Allows the developer to create a table where values will only be overwritten based on a priority, or one sorted by priority."
+return PriorityTable]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX4FD40BCE54154C05BB89DFD3AC817204">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{E43910C1-09B9-4545-9D20-A1B57AB6DA99}</string>
+							<ProtectedString name="Source"><![CDATA[--[[ 
+Allows you to wrap a table with functions to deal with managing the priority of that table.
+To use it, run the wrap function (wrapPriorityTable) on the table, and then simply add a dictionary or value to the original table at a 
+certain index, and then that value will only be overwritten when the Priority value of the dictionary entry (which defaults to 1) is 
+higher than the current entry. (IF USING A MULTIPLE VALUES TABLE, USE THE FUNCTIONS BELOW INSTEAD)
+
+READING THE TRUE TABLE
+
+When a value is inserted, it gets converted always (if it is not already) into a dictionary named .trueValues inside of the original
+functions. trueValues contains the information of the original table, and so you can find your priority table entry at
+tab[index]["trueValues"][numericalindex], where the numericalindex is included if it is a multipleValues table.
+
+This is usually not needed, as simply indexing the original table with the index will return the contents of the trueValues
+table for that index.
+
+TABLE FUNCTIONS
+
+tab:getpriority("index", numericalindex) -- Returns the priority of the entry at that index. NumericalIndex is required if the table
+is a MultipleValues table, and is a number.
+
+NON MULTIPLE VALUE TABLE FUNCTIONS -----------------
+
+There are a few functions for non MultipleValue tables (see below,) and these functions are only usable by nonMultipleValue tables.
+
+tab:replace("index", value) -- This will always replace the value in the current table regardless of Priority, maintaining the same
+priority.
+
+Non multiple value table format:
+["TablePassed"] = {
+	.trueValues = {
+		["DataEntered1"] = {
+			["Priority"] = 2,
+			["Value"] = "hi",
+			},
+		["DataEntered2"] = {
+			["Priority"] = 2,
+			["Value"] = "hi",
+			},
+		}
+	}
+	.Changed = event
+	(index and newindex metamethods attached to this table)
+}
+
+MULTIPLEVALUE TABLES ---------------------
+
+Optionally, pass true to the second argument (multipleVals) and the table will not overwrite old entries, and will instead sort them in a
+numerical array based upon their priority. This means that indexes will *not* be preserved.
+When using multipleVals, you insert into the table as normal (setting the index to the val of the main table,) or using the :insert()
+method. You also can use additional functions (see below)
+
+Multiplevalue table format:
+["TablePassed"] = {
+	.trueValues = {
+		["DataEntered1"] = {
+			{
+				["Priority"] = 2,
+				["Value"] = "hi",
+			},
+			{
+				["Priority"] = -1,
+				["Value"] = "after",
+			},
+		},
+		["DataEntered2"] = {
+			{
+				["Priority"] = 2,
+				["Value"] = "hello again",
+			},
+			{
+				["Priority"] = -1,
+				["Value"] = "after but in 2",
+			},
+		},
+	}
+	.Changed = event
+	(index and newindex metamethods attached to this table)
+}
+
+MULTIPLEVALUE TABLE FUNCTIONS ---------------
+
+There are a few functions provided by the wrapper to tables for multipleval tables, which are: 
+
+tab:get("index") which will return all numerical index = value table for the given table entry
+
+tab:set("index", numericalindex, value) which will replace the value in that sublist's numerical index while maintaining priority
+(unless if one is provided in value)
+
+tab:insert("index", value) will insert a new value into the sub-priority-table
+
+tab:remove("index", numericalindex) which will remove the numericalindex out of the table of "index".
+An array of numericalindex can also be passed, in which all values will be removed.
+
+tab:sort("index") is also available, but isn't required externally in most uses.
+These functions are only usable if the PriorityTable is a MultipleVals table.
+
+tab:rawget("index") is the same thing as get, but will always get the tables instead of returning only index=value when a value
+was inserted into the table.
+
+tab:findfromval("index", value, "valueName", false) finds the elements of a priorityTable with a specific value
+the first two arguments are required, and the third object will specify the index of the value in the table, which will be
+"Value" by default. The fourth argument defines whether to return just the first found element, or all elements with that value.
+If the fourth argument is given, it will return an array of numbers instead of just one number.
+
+----------------------------
+
+This also supports writing in non dictionary values, but they will not have any sort of priorty checking, and will default to 1.
+This does mean that table library will be broken unless if you call it on the trueValues table of the original table.
+Finally, this also provides a value .Changed which will fire when a value is added with the index and value
+
+]]
+
+-- Also don't try to set .trueValues or anything with two underscores lol
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX1B9384BF9601468CB319219FA454427B">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">Utility</string>
+						<string name="ScriptGuid">{F4BBFE2D-39FD-4B8F-B9A8-AC4A039D27D9}</string>
+						<ProtectedString name="Source"><![CDATA[-- NOTE: Utility should have no requirements.
+--[[
+Utility implements functions required by Core and generic functions required by other modules.
+]]
+local Utility = {}
+Utility["Description"] = "Provides utility functions for the sake of all modules."
+local runService = game:GetService("RunService")
+local players = game:GetService("Players")
+
+local function getEnvironmentData(mainenv, name) -- actual code for both getCallingScript and getCallingEnv
+	local returnEnv = {}
+	local returnCallingScript = "FAILED TO GET CALLING SCRIPT"
+	local currentLevel = 2
+	local succ, err = pcall(function()
+		for i = 2, 20 do
+			currentLevel = 2
+			local env = mainenv.getfenv(i)
+			if env.script ~= mainenv.script and env.script ~= script and env.script:IsA("ModuleScript") then
+				returnEnv = env
+				returnCallingScript = env.script:GetFullName()
+				break
+			end
+		end
+	end)
+	if not succ then
+		warn(err)
+		error(currentLevel .. " - FAILED TO GET ENV CALLING SCRIPT - " .. name)
+	end
+	return returnEnv, returnCallingScript
+end
+
+function Utility.init(core)	
+	core:addFunction("getCallingEnv", function(env)
+		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingEnv")
+		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
+		
+		local retenv, _ = getEnvironmentData(env, callerName)
+		return retenv
+	end, 1, script:GetFullName())
+	
+	core:addFunction("getCallingScript", function(env)
+		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingScript")
+		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
+		
+		local _, name = getEnvironmentData(env, callerName)
+		return name
+	end, 1, script:GetFullName())
+	
+	core:addFunction("loadEnv", function(env)
+		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingEnv")
+		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
+		
+		for i, v in pairs({
+			chat = game:GetService("Chat"),
+			contentProvider = game:GetService("ContentProvider"),
+			debris = game:GetService("Debris"),
+			groupService = game:GetService("GroupService"),
+			lighting = game:GetService("Lighting"),
+			players = game:GetService("Players"),
+			replicatedStorage = game:GetService("ReplicatedStorage"),
+			runService = game:GetService("RunService"),
+			starterPack = game:GetService("StarterPack"),
+			starterPlayer = game:GetService("StarterPlayer"),
+			teams = game:GetService("Teams"),
+			tweenService = game:GetService("TweenService"),
+			httpService = game:GetService("HttpService"),
+			}) do
+			env[i] = v
+		end
+		if runService:IsServer() then
+			for i, v in pairs({
+				dataStoreService = game:GetService("DataStoreService"),
+				serverStorage = game:GetService("ServerStorage"),
+				}) do
+			env[i] = v
+			end
+		else
+			local localPlayer = players.LocalPlayer
+			for i, v in pairs({
+				localPlayer = localPlayer,
+				backpack = localPlayer:WaitForChild("Backpack"),
+				character = localPlayer.Character or localPlayer.CharacterAdded:Wait(),
+				contextActionService = game:GetService("ContextActionService"),
+				playerGui = localPlayer:WaitForChild("PlayerGui"),
+				}) do
+				env[i] = v
+			end
+		end
+	end)
+	
+	core:addFunction("getClientScript", function(plr)
+		if plr == nil and not runService:IsServer() then
+			plr = players.LocalPlayer
+		else
+			return nil
+		end
+		
+		local character = plr.Character or plr.CharacterAdded:Wait()
+		return character:WaitForChild("RBRSClient")
+	end)
+end
+
+return Utility
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX4E6EA716F597429D9740720FCAA8CD11">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{DFEE9B65-8940-4DCB-B25A-31F2024E88D0}</string>
+							<ProtectedString name="Source"><![CDATA[--[[ 
+env Core.getCallingEnv(getfenv())
+Returns the environment of the function that called the function that called getCallingEnv.
+You must call it with getfenv() as the argument.
+
+string Core.getCallingScript(getfenv())
+Returns the environment of the function that called the function that called getCallingScript.
+You must call it with getfenv() as the argument.
+
+nil Core.loadEnv(getfenv())
+loadEnv takes the environment of the calling script, and inserts variables into it responding to various commonly used services.
+You must call it with getfenv() as the argument.
+These are the variables added:
+{
+	chat = game:GetService("Chat")
+	contentProvider = game:GetService("ContentProvider")
+	contextActionService = game:GetService("ContextActionService")
+	debris = game:GetService("Debris")
+	groupService = game:GetService("GroupService")
+	httpService = game:GetService("HTTPService")
+	lighting = game:GetService("Lighting")
+	players = game:GetService("Players")
+	replicatedStorage = game:GetService("ReplicatedStorage")
+	runService = game:GetService("RunService")
+	starterPack = game:GetService("StarterPack")
+	starterPlayer = game:GetService("StarterPlayer")
+	teams = game:GetService("Teams")
+	tweenService = game:GetService("TweenService")
+	
+	dataStoreService = game:GetService("dataStoreService")
+	serverStorage = game:GetService("ServerStorage") -- Server only
+	
+	backpack = localPlayer.Backpack -- Client only
+	character = localPlayer.Character -- Client only
+	localPlayer = players.localPlayer -- Client only
+	playerGui = localPlayer.PlayerGui -- Client only
+}
+
+script Core.getClientScript(player)
+getClientScript returns the LocalScript inside of the player, which is the preferred place to store things such as events that will be
+discarded when the player respawns.
+
+If player is not provided, it will either return nil or assume it is LocalPlayer.
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBX4D0FACCD55D84C74A1511647DF7D330C">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">DeactivatedModules</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="Folder" referent="RBXBA7B4C9686BB43CA8755CFF56864F784">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">F3X</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="Folder" referent="RBX8531E610688E41CCA2A5185DC9494008">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">Libraries</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="Folder" referent="RBX510B57EED51E495A891E3F57F784D658">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">Roleplay</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="Folder" referent="RBXEDD6969FF0C44D1A84052C885FC714C1">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">UI</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBXC8B003E834BB4FB19259E9788B67CF8B">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">Modules</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="Folder" referent="RBXF2A91D59A613493FB342EF504FB17139">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">F3X</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+				<Item class="ModuleScript" referent="RBX836E87253F3B43529A099F6B888A1C27">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">F3XAttach</string>
+						<string name="ScriptGuid">{F1E6F548-9B54-45F5-A578-3DB21AFB765A}</string>
+						<ProtectedString name="Source"><![CDATA[local F3XAttacher = {}
+local ClientNodepoints = { -- values are either tables (for childen) or string (for name used when calling)
+	["Core"] = {"Core",
+		["History"] = "History",
+		["Selection"] = "Selection",
+		["Security"] = "Security",
+		},
+	["Tools"] = {
+		["Anchor"] = "Anchor",
+		["Collision"] = "Collision",
+		["Decorate"] = "Decorate",
+		["Lighting"] = "Lighting",
+		["Material"] = "Material",
+		["Mesh"] = "Mesh",
+		["Move"] = "Move",
+		["NewPart"] = "NewPart",
+		["Paint"] = "Paint",
+		["Resize"] = "Resize",
+		["Rotate"] = "Rotate",
+		["Surface"] = "Surface",
+		["Texture"] = "Texture",
+		["Weld"] = "Weld",
+	},
+	["Libraries"] = {
+		["Signal"] = "Signal",
+	},
+}
+
+local ServerNodepoints = {
+	["SyncAPI"] = {
+		["SyncModule"] = "SyncModule"
+	}
+}
+
+function F3XAttacher.init(core)
+	core.loadEnv(getfenv())
+	local newF3XFuncs = {}
+	local currentF3X = {} --[[
+	[Instance] = {
+		["Core"] = {["Script"] = Instance, ["Data"] = required module}
+		["Paint"] = {["Script"] = Instance, ["Data"] = required module}
+	}
+	]]
+	local attachments = {} --[[
+		["ModuleName"] = {
+			["FunctionName"] = {
+				["Before"] = {
+					{
+					["Function"] = function
+					["Creator"] = creator
+					["Priority"] = number
+					}
+				}
+				["After"] = ...
+				["Intercept"] = ...
+			}
+		}
+	]]
+	local ourNodepoints = (runService:IsServer() and ServerNodepoints) or ClientNodepoints
+	
+	local function hookToF3X(tool)
+		local f3xTable = {}
+		if typeof(tool) == "Instance" and tool:IsA("Tool") and currentF3X[tool] == nil and tool:WaitForChild("Core", 1) then
+			local function writeFromNodes(tab, parentMod)
+				for name, ent in pairs(tab) do
+					if typeof(name) == "number" and typeof(ent) == "string" and parentMod:IsA("ModuleScript") then
+						f3xTable[ent] = parentMod
+					elseif typeof(name) == "string" and typeof(ent) == "string" then
+						f3xTable[ent] = parentMod:FindFirstChild(ent)
+					elseif typeof(ent) == "table" then
+						if parentMod:FindFirstChild(name) ~= nil then
+							writeFromNodes(ent, parentMod[name])
+						end
+					end
+				end
+			end
+			writeFromNodes(ourNodepoints, tool)
+			
+			for name, module in pairs(f3xTable) do
+				f3xTable[name] = {
+					["Script"] = module,
+					["Data"] = require(module),
+				}
+			end
+			
+			currentF3X[tool] = f3xTable
+			-- now attach all current attachments to the F3X brick
+			for moduleName, functionName in pairs(attachments) do
+				if f3xTable[moduleName] then
+					for typ, data in pairs(functionName) do
+						if typ == "Before" then
+							core.AttachBeforeRun(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
+						elseif typ == "After" then
+							core.AttachAfterRun(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
+						elseif typ == "Intercept" then
+							core.AttachIntercept(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
+						end
+					end
+				end
+			end
+			
+			-- now run all of our new f3x functions
+			for _, func in pairs(newF3XFuncs) do
+				coroutine.wrap(function()
+					func(tool, f3xTable)
+				end)()
+			end
+		end
+	end
+	
+	local function attachToPlayer(player)
+		local function pseudo()
+			local char = player.Character or player.CharacterAdded:Wait()
+			char.ChildAdded:Connect(hookToF3X)
+			hookToF3X(char:FindFirstChildWhichIsA("Tool"))
+			
+			local backpack = player:WaitForChild("Backpack")
+			player.Backpack.ChildAdded:Connect(hookToF3X)
+			for _, v in pairs(player.Backpack:GetChildren()) do
+				hookToF3X(v)
+			end
+		end
+		
+		pseudo(player)
+		player.CharacterAdded:Connect(pseudo)
+	end
+	
+	if runService:IsServer() then
+		for _, player in pairs(players:GetPlayers()) do
+			attachToPlayer(player)
+		end
+		players.PlayerAdded:Connect(function(player)
+			attachToPlayer(player)
+		end)
+	else
+		attachToPlayer(localPlayer)
+	end
+	
+	core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
+		assert(typ == "Before" or typ == "After" or typ == "Intercept", "Invalid type value, please use 'Before', 'After', or 'Intercept' -"
+			.. core.getCallingScript(getfenv()))
+		assert(typeof(func) == "function", "Non-function sent by " .. core.getCallingScript(getfenv()))
+		assert(typeof(functionName) == "string", "Invalid function name sent by " .. core.getCallingScript(getfenv()))
+		if attachments[moduleName] == nil then
+			attachments[moduleName] = {
+			}
+		end
+		if attachments[moduleName][functionName] == nil then
+			attachments[moduleName][functionName] = {
+				["Before"] = {},
+				["After"] = {},
+				["Intercept"] = {}
+			}
+		end
+		local entry = {
+			["Function"] = func,
+			["Priority"] = priority,
+			["Creator"] = core.getCallingScript(getfenv())
+		}
+		table.insert(attachments[moduleName][functionName][typ], entry) 
+
+		-- now load it for all current f3x bricks
+		for tool, inf in pairs(currentF3X) do
+			if inf[moduleName] ~= nil then
+				if typ == "Before" then
+					core.AttachBeforeRun(inf[moduleName]["Script"], functionName, func, priority)
+				elseif typ == "After" then
+					core.AttachAfterRun(inf[moduleName]["Script"], functionName, func, priority)
+				elseif typ == "Intercept" then
+					core.AttachIntercept(inf[moduleName]["Script"], functionName, func, priority)
+				end
+			end
+		end
+	end)
+	
+	core:addFunction("attachNewF3X", function(func)
+		assert(typeof(func) == "function", "Invalid function sent to attachNewF3X by " .. core.getCallingScript(getfenv()))
+		table.insert(newF3XFuncs, func)
+		for tool, dataTab in pairs(currentF3X) do
+			coroutine.wrap(function()
+				func(tool, dataTab)
+			end)()
+		end
+	end)
+end
+
+F3XAttacher["InitRequirements"] = {
+	"AttachBeforeRun",
+	"AttachIntercept",
+	"AttachAfterRun",
+}
+
+F3XAttacher["Description"] = "Provides the library for easy attachment to F3X tools and events."
+
+return F3XAttacher]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXDBA59902284D4EB3B2F848DBDBE12907">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{E8392841-7421-4516-AD9F-75C894E9A8AD}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+F3XAttacher is a module that automates attaching to F3X functions for modules that manipulate certain values / functions of F3X.
+It has one primary function, which is responsible for adding the function to the attachment table for the F3X module.
+nil core.addF3XAttachment("ModuleName", "FunctionName", "Type", function, priority)
+Type is either "Before", "Intercept", or "Run". Any attachment added will be added to currently equipped F3X.
+
+Additionally, it has a function core.attachNewF3X(func), which will fire when a new F3X is added for manual modification.
+The function that is passed will be called with two arguments, the first being the F3X tool itself.
+The second is a table in the following format of all of the default module hooks (see below)
+{
+	["Core"] = {
+		["Script"] = ModuleScriptInstance
+		["Data"] = required ModuleScript
+	}
+}
+THis function will also be called with all current F3X blocks.
+
+Out of courtesy for other modules, please send the return data of the function in the same format as it was sent to the module originally,
+to prevent errors from arising.
+
+List of F3X modules that are supported by the module:
+Client:
+	Core - A variety of F3X features are tied directly into the Core. See F3X code.
+]]
+
+return {}
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXAD54F7AF20134A9F9F5C251A52310A98">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">RemoveExplorer</string>
+						<string name="ScriptGuid">{5ABEFDD1-D1C8-4E2A-9F4D-240CFFC53575}</string>
+						<ProtectedString name="Source"><![CDATA[local RemoveF3XExplorer = {}
+local config = require(script:WaitForChild("Configuration"))
+
+function RemoveF3XExplorer.client(core)
+	--core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
+	if core.getSecurityLevel() < config.RankToBypass then
+		core.addF3XAttachment("Core", "OpenExplorer", "Intercept", function()
+			return nil
+		end)
+		
+		core.attachNewF3X(function(tool, dataTab)
+			local core = dataTab["Core"]["Data"]
+			while core.UI == nil do
+				wait()
+			end
+			core.UI:WaitForChild("Dock"):WaitForChild("SelectionPane"):WaitForChild("ExplorerButton").Visible = false
+		end)
+	end
+end
+
+function RemoveF3XExplorer.server(core)
+	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
+		if core.getSecurityLevel(Client) < config.RankToBypass then
+			if ActionName == "SyncAnchor" then
+				ActionName = nil
+			end
+			return Client, ActionName, ...
+		end
+	end)
+end
+
+RemoveF3XExplorer["Description"] = "Removes and disables the F3X Explorer"
+
+RemoveF3XExplorer["InitRequirements"] = {
+	"addF3XAttachment",
+	"attachNewF3X",
+	["getSecurityLevel"] = false,
+}
+
+RemoveF3XExplorer["ConfigurationDescription"] = {
+	["RankToBypass"] = "What rank will be able to bypass this feature",
+}
+
+return RemoveF3XExplorer
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXCDB829DCD8E64851BA653BBF702AA51E">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">Configuration</string>
+							<string name="ScriptGuid">{0CC2E906-19F3-44B6-A72B-6F9CEE9F7655}</string>
+							<ProtectedString name="Source"><![CDATA[local Configuration = {
+	["RankToBypass"] = 1,
+}
+
+return Configuration
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX37AF10DD86514DECBC8D916C67DF30E3">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">RemoveAnchor</string>
+						<string name="ScriptGuid">{2914D596-AC88-483F-81FF-2834688F18D6}</string>
+						<ProtectedString name="Source"><![CDATA[local RemoveF3XAnchor = {}
+local config = require(script:WaitForChild("Configuration"))
+
+function RemoveF3XAnchor.client(core)
+	--core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
+	if core.getSecurityLevel() < config.RankToBypass then
+		core.addF3XAttachment("Anchor", "Equip", "Intercept", function()
+			return nil
+		end)
+		core.addF3XAttachment("Anchor", "ShowUI", "Intercept", function()
+			return nil
+		end)
+		core.addF3XAttachment("Anchor", "BindShortcutKeys", "Intercept", function()
+			return nil
+		end)
+		
+		core.attachNewF3X(function(tool, dataTab)
+			local core = dataTab["Core"]["Data"]
+			if not tool.Loaded.Value then
+				tool.Loaded.Changed:Wait()
+			end
+			local assets = require(tool.Assets)
+			local icon = assets["AnchorIcon"]
+			for i, v in pairs(core.UI.Dock.ToolList.List:GetChildren()) do
+				if v:IsA("ImageButton") and v.Image == icon then
+					v.Visible = false
+				end
+			end
+		end)
+	end
+end
+
+function RemoveF3XAnchor.server(core)
+	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
+		if core.getSecurityLevel(Client) < config.RankToBypass then
+			if ActionName == "SetLocked" then
+				ActionName = nil
+			end
+			return Client, ActionName, ...
+		end
+	end)
+end
+
+RemoveF3XAnchor["Description"] = "Removes and disables the F3X Anchor Tool"
+
+RemoveF3XAnchor["InitRequirements"] = {
+	"addF3XAttachment",
+	"attachNewF3X",
+	["getSecurityLevel"] = false,
+}
+
+RemoveF3XAnchor["ConfigurationDescription"] = {
+	["RankToBypass"] = "What rank will be able to bypass this feature",
+}
+
+return RemoveF3XAnchor
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX68FE889116E2452B835F0BCCA2E90421">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">Configuration</string>
+							<string name="ScriptGuid">{9AA7246F-9271-4803-B94A-9D4385A35E33}</string>
+							<ProtectedString name="Source"><![CDATA[local Configuration = {
+	["RankToBypass"] = 1,
+}
+
+return Configuration
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX3A78305C1E5745F78CAD05B53B2F7380">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">DisableLockedParts</string>
+						<string name="ScriptGuid">{556F5BEE-2886-4BF4-BBB5-01FCB9821C07}</string>
+						<ProtectedString name="Source"><![CDATA[local DisableLockedF3XParts = {}
+local config = require(script:WaitForChild("Configuration"))
+-- As a note, we *could* set the DisallowedLock option in SyncModule, but that does not prevent players from selecting modules with a
+-- locked part.
+
+local function getNonLocked(parts)
+	for i, part in pairs(parts) do
+		if part:IsA("BasePart") and part.Locked then
+			table.remove(parts, i)
+		end
+		if #part:GetChildren() > 0 then
+			for _, desc in pairs(part:GetDescendants()) do
+				if desc:IsA("BasePart") and desc.Locked then
+					table.remove(parts, i)
+					break
+				end
+			end
+		end
+	end
+	return parts
+end
+
+function DisableLockedF3XParts.client(core)
+	--core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
+	if false and core.getSecurityLevel() < config.RankToBypass then
+		core.addF3XAttachment("Selection", "Add", "Before", function(parts, registerhistory)
+			return getNonLocked(parts), registerhistory
+		end)
+	end
+end
+
+function DisableLockedF3XParts.server(core)
+	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
+		local parts = core.GetSyncModifyingParts(ActionName, ...)
+		if parts ~= nil then
+			for _, part in pairs(parts) do
+				if part.Locked then
+					return Client, nil, ...
+				end
+			end
+		end
+		return Client, ActionName, ...
+	end)
+end
+
+DisableLockedF3XParts["Description"] = "Prevents players from selection parts that are locked"
+
+DisableLockedF3XParts["ConfigurationDescription"] = {
+	["RankToBypass"] = "What rank will be able to bypass this feature",
+	["AllowPlayerSelection"] = "Allow players to select themselves with Shift + K",
+}
+
+DisableLockedF3XParts["InitRequirements"] = {
+	"addF3XAttachment",
+	"attachNewF3X",
+	["getSecurityLevel"] = false,
+}
+
+return DisableLockedF3XParts
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX6A4D69DA94F14C059FFC7091E5E0DA96">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">Configuration</string>
+							<string name="ScriptGuid">{AC2693A7-7A66-4EE7-B13B-0E435C320450}</string>
+							<ProtectedString name="Source"><![CDATA[local Configuration = {
+	["RankToBypass"] = 1,
+	["AllowPlayerSelection"] = true,
+}
+
+return Configuration
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX076135405F5F47BFBDA4361C30930051">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">SyncModuleParser</string>
+						<string name="ScriptGuid">{DAD7EA8D-9AAD-49E6-8689-72EC99B39BB6}</string>
+						<ProtectedString name="Source"><![CDATA[-- adds a small convenience function to Server, GetSyncModifyingParts
+-- gives you back what parts are being modified
+
+local GetPartsBeingModified = {}
+local ChangesFunctions = {"SyncMove", "SyncResize", "SyncRotate", "SyncColor", "SyncSurface", "CreateLights", "CreateDecorations", 
+	"SyncDecorate", "CreateMeshes", "SyncMesh", "CreateTextures", "SyncAnchor", "SyncCollision", "SyncMaterial",
+} 
+-- for functions that use Changes as a format
+local FirstArgItems = {"Clone", "SetParent", "SetName", "Remove", "Parts", "Export", "UndoRemove"} 
+local WeldFunctions = {"RemoveWelds", "UndoRemovedWelds"}
+-- for functions that use the first argument as items
+
+local function getPartsFromInstances(tab)
+	local allItems = {}
+	
+	for _, v in pairs(tab) do
+		if v:IsA("BasePart") then
+			table.insert(allItems, v)
+		end
+		if #v:GetChildren() > 0 then
+			for _, v in pairs(v:GetDescendants()) do
+				if v:IsA("BasePart") then
+					table.insert(allItems, v)
+				end
+			end
+		end
+	end
+	
+	return allItems
+end
+
+function GetPartsBeingModified.server(core)
+	core:addFunction("GetSyncModifyingParts", function(ActionName, ...)
+		if ActionName == "CreateGroup" then
+			local _, _, items = ...
+			return getPartsFromInstances(items)
+		elseif ActionName == "Ungroup" then
+			local groups = ...
+			local trueAllItems = {}
+			for _, group in pairs(groups) do
+				local allItems = getPartsFromInstances(group)
+				for _, v in pairs(allItems) do
+					table.insert(trueAllItems, v)
+				end
+			end
+			return trueAllItems
+		elseif table.find(WeldFunctions, ActionName) then
+			local allItems = {}
+			local welds = ...
+			for _, weld in pairs(welds) do
+				table.insert(allItems, weld.Part0)
+				table.insert(allItems, weld.Part1)
+			end
+			return allItems
+		elseif table.find(ChangesFunctions, ActionName) then
+			local allItems = {}
+			local changes = ...
+			for _, v in pairs(changes) do
+				if v["Part"] then
+					table.insert(allItems, v.Part)
+				end
+			end
+			return allItems
+		elseif table.find(FirstArgItems, ActionName) then
+			local items = table.pack(...)[1]
+			return getPartsFromInstances(items)
+		end
+	end)
+end
+
+GetPartsBeingModified["Description"] = "Adds a small utility function to figure out which parts are being modified on F3X's server code"
+
+return GetPartsBeingModified
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Folder" referent="RBX139917621C4343CBBE5751C945CA3B80">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">Libraries</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+				<Item class="ModuleScript" referent="RBXA21B2F84750C4CA5A7BD3F204E796132">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">Remote</string>
+						<string name="ScriptGuid">{12B955BF-516E-4D27-8FD1-A0A676CF2069}</string>
+						<ProtectedString name="Source"><![CDATA[local Remote = {}
+Remote.Calls = {}
+
+local players = game:GetService("Players")
+
+function Remote.init(core)
+	core.wrapPriorityTable(Remote.Calls)
+	
+	core:addFunction("createRemoteListener", function(listenerName, func, priority) -- Priority will default to 1 if value is nil
+		assert(typeof(listenerName) == "string", "Listener string was not a string from " .. core.getCallingScript(getfenv()))
+		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()) .. " for " .. listenerName)
+		assert(priority == nil or typeof(priority) == "number", 
+			"Invalid priority from " ..core.getCallingScript(getfenv()).." for "..listenerName)
+
+		Remote.Calls[listenerName] = {
+			["Priority"] = priority,
+			["Function"] = func,
+		}
+	end)
+end
+
+function Remote.waitForListener(name, timeout, core)
+	local timeWaiting = 0
+	assert(typeof(name) == "string", "Invalid tag sent with remote call.")
+	coroutine.wrap(function() -- timeout logic
+		if timeout == nil then
+			wait(5)
+			if Remote.Calls[name] == nil then
+				warn("Listener call for " .. name .. " does not seem to be implemented on the recieving end.")
+			end
+		else
+			while timeWaiting < timeout do
+				timeWaiting += 1
+				if Remote.Calls[name] == nil and (timeWaiting == timeout - 1 or timeWaiting == 5) then
+					warn("Listener call for " .. name .. " does not seem to be implemented on the recieving end. Adding stub.")
+					core.createListener(name, function(...) end, -100)
+				end
+			end
+		end
+	end)()
+	while Remote.Calls[name] == nil do
+		Remote.Calls.Changed:Wait()
+	end
+end
+
+function Remote.server(core)
+	local folder = Instance.new("Folder", core.env)
+	folder.Name = "RBRS_Remotes"
+	
+	local event = Instance.new("RemoteEvent", folder)
+	local func = Instance.new("RemoteFunction", folder)
+	
+	core:addFunction("FireClient", function(self, client, tag, ...)
+		assert(typeof(self) == "table", 'Please call FireClient with ":" - ' .. core.getCallingScript(getfenv()))
+		event:FireClient(client, tag, ...)
+	end)
+	
+	core:addFunction("FireAllClients", function(self, tag, ...)
+		assert(typeof(self) == "table", 'Please call FireAllClients with ":" - ' .. core.getCallingScript(getfenv()))
+		event:FireAllClients(tag, ...)
+	end)
+	
+	core:addFunction("InvokeClient", function(self, client, tag, ...)
+		assert(typeof(self) == "table", 'Please call InvokeClient with ":" - ' .. core.getCallingScript(getfenv()))
+		return func:InvokeClient(client, tag, ...)
+	end)
+	
+	event.OnServerEvent:Connect(function(p, tag, ...)
+		Remote.waitForListener(tag)
+		Remote.Calls[tag].Function(p, ...)
+	end)
+	
+	func.OnServerInvoke = function(p, tag, ...)
+		Remote.waitForListener(tag, 15, core)
+		return Remote.Calls[tag].Function(p, ...)
+	end
+end
+
+function Remote.client(core)
+	local folder = core.env:WaitForChild("RBRS_Remotes")
+	
+	local event = folder:WaitForChild("RemoteEvent")
+	local func = folder:WaitForChild("RemoteFunction")
+	
+	core:addFunction("InvokeServer", function(self, tag, ...)
+		assert(typeof(self) == "table", 'Please call InvokeServer with ":" - ' .. core.getCallingScript(getfenv()))
+		return func:InvokeServer(tag, ...)
+end)
+	
+	core:addFunction("FireServer", function(self, tag, ...)
+		assert(typeof(self) == "table", 'Please call FireServer with ":" - ' .. core.getCallingScript(getfenv()))
+		event:FireServer(tag, ...)
+	end)
+	
+	event.OnClientEvent:Connect(function(tag, ...)
+		Remote.waitForListener(tag)
+		Remote.Calls[tag].Function(...)
+	end)
+
+	func.OnClientInvoke = function(tag, ...)
+		Remote.waitForListener(tag, 15, core)
+		return Remote.Calls[tag].Function(...)
+	end
+end
+
+return Remote
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXDB097F6968DC460DB200827CE9038187">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{316F2D25-83B2-42B2-A1E1-0E88012B8511}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+This module provides the functions and methods required to establish client -> server communication.
+
+This module adds several functions to Core, with the primary non standard function being
+createListener
+
+createListener usage:
+Core.createRemoteListener(functionName, function, priority)
+Priority is optional, but functionName and function are required, and depending in which context the function was called (client/server)
+it will set up a function for client <-> server communication.
+
+This module also implements the functions expected of a RemoteEvent / RemoteFunction into the core, where the usage is the same as normal
+except that the first (or second argument, if the first argument is the player) is the name of the function that we will be calling on the
+other end.
+
+Server functions:
+void Core:FireClient(player, functionName, ...)
+void Core:FireAllClients(functionName, ...)
+variant Core:InvokeClient(player, functionName, ...)
+
+Client functions:
+void Core:FireServer(functionName, ...)
+variant Core:InvokeServer(player, functionName, ...)
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX25E5CBE921F0463EB71B42C34CDE557B">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">Attach</string>
+						<string name="ScriptGuid">{601375D9-49DE-4EFE-BCEA-54D37BB4DD0D}</string>
+						<ProtectedString name="Source"><![CDATA[--[[ This module is responsible for the interception of F3X module calls created by functions, and processing the data.
+	As it can also be used to hijack Core functions (or realistically any module functions,) it is a Library.
+]]
+
+local Attach = {}
+Attach.Attachments = {}
+Attach.__index = Attach
+
+function Attach:createFunctionStack(tab, origFunc, Module)
+	if tab["trueValues"] ~= nil then
+		tab = tab.trueValues
+	end
+	local functionStack = {}
+	if tab["BeforeRun"] then
+		for _, v in pairs(tab["BeforeRun"]) do
+			if typeof(v) == "table" and v["Function"] and v["Creator"] then
+				table.insert(functionStack, {
+					["Function"] = v["Function"],
+					["Creator"] = v["Creator"],
+					["Type"] = "BeforeRun",
+				})
+			end
+		end
+	end
+	if tab["Run"] and tab["Run"][1] then
+		table.insert(functionStack, {
+			["Function"] = tab["Run"][1]["Function"],
+			["Creator"] = tab["Run"][1]["Creator"],
+			["Type"] = "Run",
+		})
+	else
+		table.insert(functionStack, {
+			["Function"] = origFunc,
+			["Creator"] = Module:GetFullName(),
+			["Type"] = "Run"
+		})
+	end
+	if tab["AfterRun"] then
+		for _, v in pairs(tab["AfterRun"]) do
+			if typeof(v) == "table" and v["Function"] and v["Creator"] then
+				table.insert(functionStack, {
+					["Function"] = v["Function"],
+					["Creator"] = v["Creator"],
+					["Type"] = "AfterRun",
+				})
+			end
+		end
+	end
+	return functionStack
+end
+
+function Attach:runAttached(callerTab, tab, Module, targ, ind, ...)
+	local args = {...}
+	
+	-- Check if args == callerTab, and if so, remove.
+	if args[1] ~= nil and args[1] == callerTab then
+		table.remove(args, 1)
+	end
+	-- Create our function stack
+	local functionStack = self:createFunctionStack(tab, targ, Module)
+	local data = args
+	for i, func in pairs(functionStack) do
+		if callerTab then
+			local env = getfenv(func["Function"])
+			env.self = callerTab
+		end
+		local succ, err
+		succ, err = pcall(function()
+			local ourRet = {func["Function"](table.unpack(data))}
+			data = ourRet
+		end)
+		if not succ then
+			warn(func["Type"] .. " function from " .. func["Creator"] .. ((ind and " for function " .. ind) or "") ..
+				" for module " .. (Module and Module:GetFullName()) or "ERROR.." .. " has errored."
+			)
+			if i ~= 1 then
+				warn("The function that ran before the erroring function was provided by " .. functionStack[i - 1]["Creator"])
+			end
+			warn(err)
+		end
+	end
+end
+
+function Attach.initFuncTab(Core, entry, Module, functionName)
+	local funcTab = entry[functionName]
+	if funcTab == nil then
+		--[[funcTab = {
+			["BeforeRun"] = {},
+			["Run"] = {},
+			["AfterRun"] = {},
+		}]]
+		funcTab = {}
+		entry[functionName] = funcTab
+		--Core.wrapPriorityTable(funcTab["BeforeRun"], true)
+		--Core.wrapPriorityTable(funcTab["Run"], false)
+		--Core.wrapPriorityTable(funcTab["AfterRun"], true)
+		if entry["__Module"][functionName] ~= nil then -- only run this code if this isn't an mt function
+			-- so that we can write to the function itself
+			local targFunc = entry["__Module"][functionName]
+			assert(typeof(targFunc == "function"), functionName .. " isn't a function in module. - " .. 
+				Core.getCallingScript(getfenv()))
+			funcTab["__OriginalFunction"] = targFunc
+			entry["__Module"][functionName] = function(...)
+				Attach:runAttached(nil, entry[functionName], Module, targFunc, functionName, ...)
+			end
+		end
+		Core.wrapPriorityTable(funcTab, true)
+	end
+end
+
+function Attach.init(core)
+	Attach.Core = core
+	
+	core:addFunction("AttachBeforeRun", function(module, functionName, func, priority)
+		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
+		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
+		Attach:loadModule(module)
+		local entry = Attach.Attachments[module]
+		Attach.initFuncTab(core, entry, module, functionName)
+		entry[functionName]:insert("BeforeRun", {
+			["Function"] = func,
+			["Priority"] = priority, 
+			["Creator"] = core.getCallingScript(getfenv()),
+		})
+		return Attach.Attachments[module]
+	end)
+	
+	core:addFunction("AttachIntercept", function(module, functionName, func, priority)
+		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
+		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
+		Attach:loadModule(module)
+		local entry = Attach.Attachments[module]
+		Attach.initFuncTab(core, entry, module, functionName)
+		entry[functionName]["Run"] = {
+			["Function"] = func,
+			["Priority"] = priority, 
+			["Creator"] = core.getCallingScript(getfenv()),
+		}
+		return Attach.Attachments[module]
+	end)
+	
+	core:addFunction("AttachAfterRun", function(module, functionName, func, priority)
+		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
+		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
+		Attach:loadModule(module)
+		local entry = Attach.Attachments[module]
+		Attach.initFuncTab(core, entry, module, functionName)
+		entry[functionName]["AfterRun"] = {
+			["Function"] = func,
+			["Priority"] = priority, 
+			["Creator"] = core.getCallingScript(getfenv()),
+		}
+		return Attach.Attachments[module]
+	end)
+	
+	core:addFunction("getAttachments", function(module)
+		return Attach.Attachments[module]
+	end)
+end
+
+function Attach:loadModule(Module) -- This function attaches to a module and loads it into the table if not available
+	-- as well as creating our primary handler for metamethods
+	if typeof(Module) == "Instance" and Module:IsA("ModuleScript") then -- ensure this is a valid entry
+		if self.Attachments[Module] ~= nil then
+			return self.Attachments[Module]
+		else
+			local mod = require(Module)
+			local tab = { -- Create our attachment table, and attach the module
+				["__Module"] = mod,
+				["__ModuleObject"] = Module,
+			}
+			self.Attachments[Module] = tab
+			-- Perform our index hijacking
+			local currentMt = getmetatable(mod)
+			if currentMt == nil then
+				currentMt = mod
+			end
+			local oldIndexMethod = currentMt["__index"] -- Store the old index metamethod so we can use it to find values
+			if typeof(currentMt) ~= "string" then
+				currentMt.__index = function(callerTab, ind) -- Set a new Index metamethod
+					local targ = nil
+					if typeof(oldIndexMethod) == "function" then
+						targ = oldIndexMethod(callerTab, ind)
+					elseif typeof(oldIndexMethod) == "table" then
+						targ = oldIndexMethod[ind]
+					else
+						targ = mod[ind]
+					end
+					if typeof(targ) == "function" and tab[ind] ~= nil then
+						return function(...)
+							self:runAttached(callerTab, tab[ind], Module, targ, ind, ...)
+						end
+					else
+						return targ
+					end
+				end
+			end
+			-- Hijack all of the functions directly in the module
+			for i, v in pairs(mod) do
+				if typeof(v) == "function" then
+					mod[i] = function(...)
+						if tab[i] ~= nil then
+							self:runAttached(nil, tab[i], Module, v, i, ...)
+						else
+							return v(...)
+						end
+					end
+				end
+			end
+		end
+	else
+		warn(typeof(Module), Module)
+		if typeof(Module) == "Instance" then
+			warn(Module:GetFullName())
+		end
+		error("Invalid call to Attach by " .. self.Core.getCallingScript(getfenv()))
+	end
+end
+
+return Attach
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX8139A65BD578443EBE23AD3F8319C21E">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{D5BC2DD6-215E-4632-B3DF-A7EBB1E232BB}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+The Attach module is responsible for creating the functions that allow for the hijacking of other module scripts in order to manipulate
+variables. It is used, for example, to intercept a variety of F3X functions to allow features such as PartOwnership to operate.
+
+There are the options to add a function to be run before and after the function that has been attached, and the option to replace the
+function entirely.
+
+Functions:
+core.AttachBeforeRun(Module, FunctionName, Function, Priority)
+Functions added through this will run before the actual / replacement function is called, and will be run in order of highest priority
+to lowest priority. The FunctionName must be the name of the function (metatable or value itself) that is being intercepted from the
+given Module.
+
+core.AttachIntercept(Module, FunctionName, Function, Priority)
+In comparison to BeforeRun and AfterRun, the Intercept function will only allow one function to operate as the replacement for the
+original function inside of the module passed. The function with the highest priority will be the function run in place of the original
+function.
+
+For AttachBeforeRun and AttachIntercept, it is generally the best idea to return the values passed in the same format that they were sent,
+or else other functions in the stack may error due to unexpected argument differences.
+
+core.AttachAfterRun(Module, FunctionName, Function, Priority)
+AttachBeforeRun behaves the exact same as AttachBeforeRun and AttachIntercept, but instead the function will be called with the returns
+of the AttachIntercept function / the original module function.
+
+core.getAttachments(Module)
+Returns the attachments for a certain module.
+
+All functions return the Attachment table for that module.
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXC7C354EF747D4D9AA1A373B06AA75A26">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">ChatCommands</string>
+						<string name="ScriptGuid">{A85F7086-FFC1-4982-891B-BEF1562926BA}</string>
+						<ProtectedString name="Source"><![CDATA[-- Implements functions to add chat commands
+-- Only has one function - core.addChatCommand("commandName",
+
+local chatCommands = {}
+chatCommands.Configuration = require(script:WaitForChild("Configuration"))
+chatCommands.Commands = {}
+
+function chatCommands:chatHandler(plr) -- this command parser could be improved
+	plr.Chatted:Connect(function(msg)
+		if string.find(msg, chatCommands.Configuration.Prefix) == 1 then
+			msg = string.gsub(msg, "!", "", 1)
+			local parts = string.split(msg, " ")
+			if chatCommands.Commands[parts[1]] then
+				local command = chatCommands.Commands[parts[1]]
+				local ourLevel = self.Core.getSecurityLevel(plr)
+				if ourLevel >= command["PermissionLevel"] then
+					if #parts > 1 then
+						command["Function"](table.unpack(parts, 2, #parts))
+					else
+						command["Function"]()
+					end
+				end
+			end
+		end
+	end)
+end
+
+function chatCommands.init(core) -- just wraps the priority table, sets core, and sets up event
+	core.wrapPriorityTable(chatCommands.Commands)
+	chatCommands.Core = core
+	
+	core:addFunction("addChatCommand", function(commandName, func, permissionlevel, securityLevel, priority)
+		assert(typeof(commandName) == "string")
+		assert(typeof(func) == "function")
+		chatCommands.Commands[commandName] = {
+			["Function"] = func,
+			["PermissionLevel"] = permissionlevel or 0,
+			["Priority"] = priority,
+		}
+	end)
+end
+
+function chatCommands.client(core)
+	core.loadEnv(getfenv())
+	chatCommands:chatHandler(localPlayer)
+end
+
+function chatCommands.server(core) -- same as above but attaches to stuff
+	core.loadEnv(getfenv())
+	for _, p in pairs(players:GetPlayers()) do
+		chatCommands:chatHandler(p)
+	end
+	players.PlayerAdded:Connect(function(p)
+		chatCommands:chatHandler(p)
+	end)
+end
+
+chatCommands["ConfigurationDescription"] = {
+	["Prefix"] = "What prefix the chatCommands will use.",
+}
+
+chatCommands["Description"] = "This module adds a chat command listener and parser to allow modules to create chat commands."
+
+chatCommands["InitRequirements"] = {
+	"wrapReplicatingTable",
+	["getSecurityLevel"] = false,
+}
+
+return chatCommands
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBX305E86709C15430A87A37983E03D1E93">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">Configuration</string>
+							<string name="ScriptGuid">{ACE017E7-3886-4C4F-AD86-C031F0EEA8EF}</string>
+							<ProtectedString name="Source"><![CDATA[local Configuration = {
+	Prefix = "!", -- "What prefix the chatCommands will use."
+}
+
+return Configuration
+]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+					<Item class="ModuleScript" referent="RBXAE058C1C5F204C679D404CAE0F5A23F5">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{D9A62912-E0D5-4D65-B501-4497EF45987B}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+chatCommands only implements one function, which is "addChatCommand"
+nil core.addChatCommand(commandName, function, priority, requirementLevel)
+The command name is a string, the function is the function to call when the command name is run, the priority is the priority
+incase multiple modules attempt to write to the same priority, and the requirementLevel is an optional variable that will set what
+permission level can use the command.
+
+>>> If the security module is not enabled, commands will be disabled that do not have a requirementLevel of 0
+
+Keep in mind, you should never trust the security level of the client, and sanity check them before allowing them to run anything if the
+command is on the client.
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXA571EAAAE4FF4551B55B547B21622A31">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">ReplicatingTable</string>
+						<string name="ScriptGuid">{9212AE60-149D-43E9-8837-2695538B460B}</string>
+						<ProtectedString name="Source"><![CDATA[local ReplicatingTable = {}
+ReplicatingTable.ReplicatedTables = {} -- Used on the server to store tags
+
+local runService = game:GetService("RunService")
+local httpService = game:GetService("HttpService")
+local players = game:GetService("Players")
+
+ReplicatingTable.__index = function(self, ind)
+	if self.__trueValues[ind] ~= nil then
+		return self.__trueValues[ind]
+	else
+		local func
+		local succ = pcall(function()
+			func = rawget(ReplicatingTable[ind])
+		end)
+		if not succ then
+			return nil
+		else
+			return func
+		end
+	end
+end
+
+ReplicatingTable.__newindex = function(self, ind, value)
+	if typeof(value) ~= "Instance" and typeof(ind) ~= "number" then
+		self.__trueValues[ind] = value
+		if runService:IsServer() then
+			self.__changedEvent:FireAllClients(httpService:JSONEncode(self.__trueValues))
+		elseif self.__replicateClient then
+			self.__changedEvent:FireServer(httpService:JSONEncode(self.__trueValues))
+		end
+	elseif typeof(value) == "Instance" then
+		warn("Failed attempt to add an instance to index " .. ind)
+	else
+		warn("Failed attempt to add to ReplicatedTable " .. ind .. " because ind is a number.")
+	end
+end
+
+function ReplicatingTable:Destroy()
+	if runService:IsServer() then
+		self.__changedEvent:FireAllClients("DESTROYTAB")
+		if self["__changedEvent"] then
+			self.__changedEvent:Destroy()
+		end
+		if self["__changedBind"] then
+			self.__changedBind:Destroy()
+		end
+	end
+end
+
+function ReplicatingTable.client(core)
+	core:addFunction("wrapReplicatingTable", function(tab, tag)
+		local tableData, bindable, event, replicateclient = core:InvokeServer("getReplicatedTable", tag)
+		tableData = httpService:JSONDecode(tableData)
+		assert(typeof(tableData) == "table", "Failed to get ReplicatingTable, or ReplicatingTable is invalid.")
+		
+		for i, v in pairs(tab) do -- don't automatically replicate changes
+			if tableData[i] == nil then
+				tableData[i] = v
+				tab[i] = nil
+			end
+		end
+		
+		tab.Changed = bindable.Event
+		tab.__trueValues = tableData or {}
+		tab.__changedBind = bindable
+		tab.__replicateClient = replicateclient
+		tab.__changedEvent = event
+		
+		-- now replicate to server, if we do that
+		if tab.__replicateClient then
+			tab.__changedEvent:FireServer(httpService:JSONEncode(tab.__trueValues))
+		end
+		
+		setmetatable(tab, ReplicatingTable)
+		event.OnClientEvent:Connect(function(updatedTab)
+			if updatedTab == "DESTROYTAB" then
+				setmetatable(tab, {})
+				for i, v in pairs(tab.__trueValues) do
+					tab[i] = v
+				end
+				tab.Changed = nil
+				tab.__changedEvent = nil
+				tab.__changedBind = nil
+				tab.__replicateClient = nil
+				tab.__trueValues = nil
+			else
+				tab.__trueValues = httpService:JSONDecode(updatedTab)
+				tab.__changedBind:Fire()
+			end
+		end)
+	end)
+end
+
+function ReplicatingTable.server(core)
+	local replicatingTableFolder = Instance.new("Folder", core.env)
+	replicatingTableFolder.Name = "ReplicatingTable"
+	
+	core.createRemoteListener("getReplicatedTable", function(p, tag)
+		if ReplicatingTable.ReplicatedTables[tag] == nil then
+			wait(1)
+			if ReplicatingTable.ReplicatedTables[tag] == nil then
+				warn("Failure to get ReplicatingTable " .. tag .. " by " .. p.Name)
+			end
+		end
+		local tab = ReplicatingTable.ReplicatedTables[tag]
+		return httpService:JSONEncode(tab.__trueValues), tab.__changedBind, tab.__changedEvent, tab.__replicateClient
+	end)
+	
+	core:addFunction("wrapReplicatingTable", function(tab, tag, allowClientWrite)
+		if ReplicatingTable.ReplicatedTables[tag] then
+			return ReplicatingTable.ReplicatedTables[tag]
+		end
+		assert(typeof(tab) == "table", "Invalid table.")
+		
+		tab.__trueValues = {}
+		for i, v in pairs(tab) do
+			if i ~= "__trueValues" then
+				tab.__trueValues[i] = v
+				tab[i] = nil
+			end
+		end
+		
+		tab.__replicateClient = allowClientWrite or false
+		tab.__changedEvent = Instance.new("RemoteEvent", replicatingTableFolder)
+		tab.__changedBind = Instance.new("BindableEvent", replicatingTableFolder)
+		tab.Changed = tab.__changedBind.Event
+		tab.__changedEvent.OnServerEvent:Connect(function(p, updatetab)
+			if tab.__replicateClient then
+				tab.__trueValues = httpService:JSONDecode(updatetab)
+				for _, plr in pairs(players:GetPlayers()) do
+					if plr ~= p then
+						tab.__changedEvent:FireClient(httpService:JSONEncode(tab.__trueValues))
+					end
+				end
+				tab.__changedBind:Fire()
+			end
+		end)
+		
+		ReplicatingTable.ReplicatedTables[tag] = tab
+		setmetatable(tab, ReplicatingTable)
+	end)
+end
+
+ReplicatingTable["InitRequirements"] = {
+	"createRemoteListener",
+}
+
+ReplicatingTable["ServerRequirements"] = {
+	"FireAllClients",
+	"FireClient",
+}
+
+ReplicatingTable["ClientRequirements"] = {
+	"FireServer",
+}
+
+ReplicatingTable["Description"] = "The Replicating Table module allows the developer to make a table that will automatically replicate"
+ReplicatingTable["Description"] = ReplicatingTable["Description"] .. " from server to client, and optionally from client to server."
+
+return ReplicatingTable
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXE9430E5A24BD4C9B8ECFAFAA17620596">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{DF81359B-8B6A-45C4-B171-2B8CC36253B8}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+Similar to the PriorityTable, ReplicatingTable is a table wrapper that makes it so that the contents of a table will replicate automatically.
+
+nil core.wrapReplicatingTable(tab, replicationTag, replicateClient)
+The main function of wrapReplicatingTable wraps the table and sets up the metatables, as well as the events to deal with table replication.
+To make a ReplicatingTable, have a table on the client and the server, and then call this function with a string as the replicationTag.
+This will be used to set up the events of the table. Both the server and the client have to init the replicatingTable.
+When the table is wrapped, the tables will be combined where the server will overwrite the client.
+
+Allowing client replication is not recommended, especially because exploiters will be able to take the RemoteEvent and fire to it.
+
+nil tab:Destroy() -- Server only
+The Destroy function properly disposes of the RemoteEvent that is created on the server. Will also replicate to client, removing
+the events from the client, and removing the metatable.
+
+Values in the replicatingTable:
+.__changedBind - The bindable used to signal when the table has changed
+.Changed - The RBXScriptSignal that is activated when the changedBind fires. Fires with the index and new value
+.__replicateClient - The replicateClient value of the table
+.__changedEvent - The remote events used to signal that the table was updated.
+.__trueValues - Where the original/added values of the table are stored, this shouldn't need to be access by scripts
+using the wrapper as the index will automatically return the value from the table.
+
+IMPORTANT NOTE:
+Because of how replication works, you can not send Instances through the tables, and indexes must be strings.
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXB9414DFE734F4C3083D2B467283DA547">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">DataStoreSafe</string>
+						<string name="ScriptGuid">{F69ECF33-2D79-4BA8-8680-C2942BB07F84}</string>
+						<ProtectedString name="Source"><![CDATA[local DoNotWriteInStudio = false
+local PrintWhenRequestOccurs = false -- Use this to debug when your code is making requests
+
+local dataStoreServiceSafe = {}
+local dataStoreSafe = {}
+dataStoreSafe.__index = dataStoreSafe
+
+local dss = game:GetService("DataStoreService")
+local rs = game:GetService("RunService")
+
+dataCache = {}
+
+local function doSafe(targFunc)
+	local succ, err, toRet
+	local errCode = 0
+	local safetyCount = 0
+	while not succ do
+		succ, err = pcall(function()
+			toRet = targFunc()
+		end)
+		if err then
+			warn(err)
+			if string.find(err, "4MB limit") then
+				errCode = 1
+				succ = true -- return so script using dss can fix issue
+			elseif string.find(err, "Request was throttled, but throttled request queue") then
+				wait(60) -- wait extra if we're spamming datastore for some reason
+				safetyCount += 1
+				if safetyCount >= 3 then -- If we're still throttled over three minutes:
+					-- 1. Fix your code
+					-- 2. Return anyways so we stop trying since we're probably going totally haywire right now
+					succ = true
+				end
+				errCode = 2
+				-- hopefully we aren't attempting more requests as we wait
+			elseif string.find(err, "studio if API access is not enabled") then
+				DoNotWriteInStudio = true
+				succ = true
+				errCode = 3
+			elseif string.find(err, "DataStore Request successful, but key not found") then
+				succ = true -- same as 4mb limit
+				errCode = 4
+			else
+				wait(7)
+			end
+		end
+	end
+	return toRet, errCode, err
+end
+
+function dataStoreServiceSafe.server(core)
+	--core:addFunction("FireClient", function(self, client, tag, ...)
+	core:addFunction("GetDataStore", function(self, datastoreName)
+		assert(typeof(self) == "table", 'Please call FireClient with ":" - ' .. core.getCallingScript(getfenv()))
+		if PrintWhenRequestOccurs then
+			print("GetDataStore " .. datastoreName .. " - " .. core.getCallingScript(getfenv()))
+		end
+		local newdss = {}
+		setmetatable(newdss, dataStoreSafe)
+		local ds = doSafe(function()
+			return dss:GetDataStore(datastoreName)
+		end)
+		newdss.DataStore = ds
+		return newdss
+	end)
+
+	function dataStoreSafe:GetAsync(key)
+		if PrintWhenRequestOccurs then
+			print("GetAsync " .. key .. " - " .. core.getCallingScript(getfenv()))
+		end
+		return doSafe(function()
+			return self.DataStore:GetAsync(key)
+		end)
+	end
+
+	function dataStoreSafe:SetAsync(key, value)
+		if PrintWhenRequestOccurs then
+			print("SetAsync " .. key .. " - " .. core.getCallingScript(getfenv()))
+		end
+		return doSafe(function()
+			if rs:IsStudio() and DoNotWriteInStudio then
+				dataCache[key] = value
+			else
+				self.DataStore:SetAsync(key, value)
+			end
+			return true
+		end)
+	end
+
+	function dataStoreSafe:UpdateAsync(key, func)
+		if PrintWhenRequestOccurs then
+			print("UpdateAsync " .. key .. " - " .. core.getCallingScript(getfenv()))
+		end
+		doSafe(function()
+			if rs:IsStudio() and DoNotWriteInStudio then
+				if dataCache[key] == nil then
+					local data = self.DataStore:GetAsync(key)
+					dataCache[key] = data
+				end
+				func(dataCache[key])
+			else
+				self.DataStore:UpdateAsync(key, func)
+			end
+		end)
+	end
+end
+
+return dataStoreServiceSafe
+]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+					</Properties>
+					<Item class="ModuleScript" referent="RBXF5A26F976E3E4864BD49097AD4DD99D1">
+						<Properties>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<Content name="LinkedSource"><null></null></Content>
+							<string name="Name">DeveloperDocumentation</string>
+							<string name="ScriptGuid">{8C061862-A514-4C74-B3B0-C6F71FE45B10}</string>
+							<ProtectedString name="Source"><![CDATA[--[[
+(some of) Datastore service, but with wrappers with pcall to loop performing requests until they don't fail
+Also only emulates writing to datastore in case of studio
+
+Along with the data, this module returns an error code and the error message in that order.
+The error message is default, but these are the error codes:
+
+0 - Successful
+1 - Size limit error
+2 - Throttle error (if we're throttling for over 3 minutes)
+3 - Enable API access in Studio
+4 - Key not found
+
+Also has two internal flags on the top of the module, disable writing in studio and/or printing out when any requests are made.
+]]
+
+return {}]]></ProtectedString>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+						</Properties>
+					</Item>
+				</Item>
+			</Item>
+			<Item class="Folder" referent="RBXB9068DC3774645968B2FA8F3A0CCBEB0">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">Roleplay</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="Folder" referent="RBX45FAFBA3738A48C5914DD0E18AD7546F">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<string name="Name">UI</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX4A3E2AB66DAF41B28F63DB02D7BA65B5">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">DeveloperTools</string>
+					<string name="ScriptGuid">{543EDB0F-F945-47CD-90E5-442B2D529A29}</string>
+					<ProtectedString name="Source"><![CDATA[-- This module adds one chat command (dumpfunctions), which lists currently active function info.
+
+local DeveloperTools = {}
+
+function DeveloperTools:addModuleCommand(name, command, func, levelreq)
+	while self.Core.LoadedModules[name] == nil do
+		wait(1)
+	end
+
+	self.Core.addChatCommand(command, func, levelreq)
+end
+
+function DeveloperTools.init(core)
+	DeveloperTools.Core = core
+	core.addChatCommand("dumpfunctions", function()
+		for i, v in pairs(core.Functions.trueValues) do
+			if typeof(i) == "string" and typeof(v) == "table" and v["srcScript"] ~= nil then
+				print(i)
+				print("		Source: " .. v.srcScript)
+				print("		Priority: " .. v.Priority)
+			end
+		end
+	end)
+	
+	DeveloperTools:addModuleCommand("Attach", "dumpattachments", function()
+		if core.LoadedModules["Attach"]["Attachments"] then
+			local attachments = core.LoadedModules["Attach"]["Attachments"]
+			for _, v in pairs(attachments) do
+				if v["__ModuleObject"] then
+					print(v["__ModuleObject"]:GetFullName())
+					for modifiedfuncName, data in pairs(v) do
+						if typeof(data) == "table" and (data["BeforeRun"] or data["Run"] or data["AfterRun"]) then
+							print("		" .. modifiedfuncName .. ":")
+							if data["BeforeRun"] then
+								print("			BeforeRun:")
+								for _, func in pairs(data["BeforeRun"]) do
+									if func["Creator"] and func["Priority"] then
+										print("				Creator: " .. func["Creator"])
+										print("				Priority: " .. func["Priority"])
+									end
+								end
+							end
+							if data["Run"] then
+								print("			Run:")
+								print("				Creator: " .. data["Run"][1]["Creator"])
+								print("				Priority: " .. data["Run"][1]["Priority"])
+							end
+							if data["AfterRun"] then
+								print("			AfterRun:")
+								for _, func in pairs(data["AfterRun"]) do
+									if func["Creator"] and func["Priority"] then
+										print("				Creator: " .. func["Creator"])
+										print("				Priority: " .. func["Priority"])
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end)
+end
+
+DeveloperTools["InitRequirements"] = {
+	"addChatCommand"
+}
+
+return DeveloperTools]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="ModuleScript" referent="RBX8BCA827B417B4107B6A1D9704C7A7A2D">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">DeveloperDocumentation</string>
+				<string name="ScriptGuid">{3B6F99B9-AADA-4AB1-95E2-861E57B62422}</string>
+				<ProtectedString name="Source"><![CDATA[--[[
+>>>>>MODULES<<<<<<
+INSTALLATION INSTRUCTIONS:
+EASY:
+For easy installation, install/update the RBRS Setup Tool, which will help automatically configure your RBRS installation.
+https://www.roblox.com/library/5804626696/raidRoleplay-Updater
+
+ADVANCED:
+Configuration options for modules should be directly parented to the module itself. Go through each module, and find the configuration
+option inside of it.
+
+Disable modules by dragging them into the DeactivatedModules folder.
+
+For extra help, see the bottom of the Dev Forum post, which can be found in the description of the model.
+(There are very strange limitations on how the dev forum link can be posted)
+
+NEW DEVELOPERS:
+Read the following below, especially the Core section.
+
+After requiring the submodule, the Core script will search and call the client function of the module (if it is the client), or
+call the server function (if it is the server calling). Additionally, if a module has a init function, that will be called independent
+of whether the module is running on the server or client. init will always be called before server / client.
+
+For accessing the Core from the module, the Core will be passed as the first and only module when server / client / init are called.
+
+Modules by default are organized into one of three folders, F3X, Libraries, and Roleplay.
+
+Additionally, optional values can be passed with the modules as a part of the table:
+
+	module["Description"] = "An example description of what the module does"
+
+	module["ServerRequirements"] = {
+		["FunctionName"] = true,
+		"FunctionNameThatWeWaitFor",
+	}
+	Function name that will be waited for before server is called
+	The value is whether or not the dependency is a hard dependency. If it is not a hard dependency, a stub function
+	will automatically be added to core that does not do anything after five seconds. This stub function will always return 0.
+	
+	module["ClientRequirements"] = {
+		["FunctionName"] = true,
+		"FunctionNameThatWeWaitFor",
+	}
+	
+	module["InitRequirements"] = {
+		["FunctionName"] = true,
+		"FunctionNameThatWeWaitFor",
+	}
+	-- Init requirements will by both client and server before running.
+	-- You should not use this unless if the function you are waiting for will be on both the client and server
+	
+	- Alternatively, you can just add the function name as a value without an index, and Core will assume that it is a hard
+	- dependency.
+	
+	module["ConfigurationDescription"] = {
+		["ConfigurationIndexName"] = "This will be used to describe the configuration option by the plugin.
+	}
+	
+	module["ConfigurationSpecial"] = {
+		["ModuleThatReturnsADictionary"] = { -- To note, default values are shown below.
+			["IndexModifiable"] = false
+			["IndexExpectedType"] = number
+			["ValueModifiable"] = true
+			["ValueExpected"] = {"string", "number"} -- ValueExpected is a way to allow multiple types of values from the plugin.
+			-- The default value for ValueExpected will be the data type of the key getting 
+			["NewIndexAddable"] = false
+			[ReferenceToFolderParent] = {
+				-- This is used in order to allow users to drag and drop elements in and out of the index location by the plugin
+				["Description"] = ""
+			}
+		}
+	} This will be used to determine what values can be changed by the user, and what they are expected to be.
+
+If your module provides a large amount of functions, or the purpose/usage is unclear, it is recommended to create documentation.
+Please include "return {}" at the bottom of your documentation to prevent errors.
+
+>>>>>WRITING CONFIGURATIONS<<<<<
+
+Configurations need to be a dictionary returned from a ModuleScript named "Configuration" directly parented to the module it is relevant to.
+Other than that, the module itself will hold the extra information required for the Configuration to work properly in the plugin.
+If a configuration value is something such as what items are included in a folder, see ConfigurationSpecial.
+
+>>>>>CORE<<<<<
+
+Values provided by Core aren't meant to be overwritten.
+
+Core.script is the ModuleScript of Core itself.
+Core.Environment is a folder that you are intended to put temporary files or other objects into (located in ReplicatedStorage)
+(alias Core.env)
+Core.ClientEnvironment is the LocalScript that is inside of the player character for RBRS, and is the preferred place to store
+temporary events (such as bindables)
+(alias Core.clientenv)
+Core.LoadedModules is where modules that are required by Core are stored (assuming that they have an init, server, or client func,)
+to allow for reading and writing by other modules when required.
+
+The functions provided by Core are not intended to be overwritten, and are always available once init/server/client is called.
+
+nil Core:addFunction(string, function, number, string)
+Core:addFunction is the primary function provided by Core, and it allows a module to add a function that will be accessible by all
+other modules inside of the RBRS installation.
+The first argument is the name of the function, 
+The second argument is the function that will be called
+The third argument is the priority (which will control what functions overwrite what). This will default to 1.
+The last string is an internal variable used when initing required modules that are parented to Core, and is not needed by other
+modules.
+
+nil Core:waitForRequirements(variant)
+Core:waitForRequirements is mostly used internally in order to wait for a module's requirements before it's functions are called.
+It can be called by a module with either a string (in which the code will assume the dependency is a hard dependency,) or it can
+be called in the same format as the Requirements tables that are attached to modules (see above)
+
+nil Core:initMod(instance)
+When passed a ModuleScript, initMod will initialize and call the functions of a module script. It is not recommended to call this,
+especially on module scripts that have already been inited, as that can result in very unpredictable behavior.
+
+nil Core:setGlobal(string, value, priority)
+Sets a global with the defined value and string into the Core with a certain priority. If priority is not provided, it will default to 1.
+If the priority is true, it will overwrite anyways.
+
+variant, number Core:getGlobal(string)
+Returns a RBRS global value that was set by :setGlobal, as well as the priority value of that global.
+
+Documentations for other functions should be in a module called DeveloperDocumentations inside of the module, or viewable with the plugin.
+For finding what functions are available, if the Debug and ChatCommands modules are enabled, the command "[prefix]dumpfunctions" will
+dump the functions that have been added to Core at runtime (printing it into the client console)
+]]]]></ProtectedString>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+		</Item>
+		<Item class="Folder" referent="RBXCF20F94C9C2747D58B54F365D8D5F7B1">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">UpdatedModules</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+		</Item>
+	</Item>
+</roblox>
