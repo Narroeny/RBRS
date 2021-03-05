@@ -59,6 +59,7 @@ function Utility.init(core)
 			players = game:GetService("Players"),
 			replicatedStorage = game:GetService("ReplicatedStorage"),
 			runService = game:GetService("RunService"),
+			starterGui = game:GetService("StarterGui"),
 			starterPack = game:GetService("StarterPack"),
 			starterPlayer = game:GetService("StarterPlayer"),
 			teams = game:GetService("Teams"),

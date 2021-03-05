@@ -93,6 +93,10 @@ temporary events (such as bindables)
 Core.LoadedModules is where modules that are required by Core are stored (assuming that they have an init, server, or client func,)
 to allow for reading and writing by other modules when required.
 
+Core.Loaded is a BoolValue creating during runtime that will only be set to true when loading is finished. For modules that may be affected
+by overwritten modules, it is recommended to add the string "Loaded" into your requirements, which will automatically ensure that everything
+else loads before the listed module is loaded.
+
 The functions provided by Core are not intended to be overwritten, and are always available once init/server/client is called.
 
 nil Core:addFunction(string, function, number, string)

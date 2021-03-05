@@ -1,5 +1,5 @@
 local Core = {}
-Core.Version = "2.0.0.dev"
+Core.Version = "2.0.0.indev"
 
 local runService = game:GetService("RunService")
 
@@ -11,6 +11,12 @@ Core.LoadedModules = {}
 Core.script = script
 Core.Environment = script:FindFirstAncestor("RBRS"):WaitForChild("Environment")
 Core.env = Core.Environment -- add an alias
+Core.Loaded = Instance.new("BoolValue")
+Core.Loaded.Value = false
+
+-- used for loaded value
+local allModules = {}
+local loadedModules = {}
 
 setmetatable(Core, Core)
 
@@ -25,7 +31,7 @@ Core.__index = function(self, ind)
 	end
 end
 
-function Core.ProtectedFunctions:waitForRequirements(reqs)
+function Core.ProtectedFunctions:waitForRequirements(reqs, module)
 	if typeof(reqs) ~= "table" then
 		reqs = {reqs}
 	end
@@ -36,19 +42,39 @@ function Core.ProtectedFunctions:waitForRequirements(reqs)
 			isHardRequirement = val
 			funcName = ind
 		end
-		coroutine.wrap(function()
-			wait(5)
-			if self.Functions[funcName] == nil then
-				if not isHardRequirement then
-					self:addFunction(funcName, function(...) return 0 end, -1000, "STUB FUNCTION")
-					warn("Failed to get " .. funcName .. ". Adding stub function.")
-				else
-					warn("Failing to get " .. funcName ..  " - Continuing to yield.")
+		if funcName ~= "Loaded" then
+			coroutine.wrap(function()
+				wait(5)
+				if self.Functions[funcName] == nil then
+					if not isHardRequirement then
+						self:addFunction(funcName, function(...) return 0 end, -1000, "STUB FUNCTION")
+						warn("Failed to get " .. funcName .. ". Adding stub function. - " .. module:GetFullName())
+					else
+						warn("Failing to get " .. funcName ..  ". Continuing to yield. - " .. module:GetFullName())
+					end
 				end
+			end)()
+			while self.Functions[funcName] == nil do
+				self.Functions.Changed:Wait()
 			end
-		end)()
-		while self.Functions[funcName] == nil do
-			self.Functions.Changed:Wait()
+		else
+			coroutine.wrap(function()
+				wait(5)
+				if not self.Loaded.Value then
+					warn("Loading is not finished, something may be going wrong... - " .. module:GetFullName() .. " - " .. #allModules
+						.. " - " .. #loadedModules
+					)
+				end
+			end)()
+			if not table.find(loadedModules, module) then
+				table.insert(loadedModules, module)
+			end
+			if #allModules == #loadedModules then
+				self.Loaded.Value = true
+			end
+			if not self.Loaded.Value then
+				self.Loaded.Changed:Wait()
+			end
 		end
 	end
 end
@@ -70,8 +96,8 @@ function Core.ProtectedFunctions:setGlobal(name, value, priority)
 		end
 	end
 	
-	assert(name == "string", "Global name was not valid from " .. self.getCallingScript(getfenv()))
-	assert(priority == "number" or priority == nil, "Invalid priority from " .. self.getCallingScript(getfenv()) .. " for " .. name)
+	assert(typeof(name) == "string", "Global name was not valid from " .. self.getCallingScript(getfenv()))
+	assert(typeof(priority) == "number" or priority == nil, "Invalid priority from " .. self.getCallingScript(getfenv()) .. " for " .. name)
 	
 	Core.References[name] = { -- this is also wrapped into a PriorityTable
 		["Priority"] = priority,
@@ -102,7 +128,7 @@ function Core.ProtectedFunctions:initMod(Module)
 			end
 			self.LoadedModules[Module.Name] = mod
 			if sget(mod, "InitRequirements") then  -- we have to pcall all of these because metamethods may call metamethod spam
-				self:waitForRequirements(mod.InitRequirements)
+				self:waitForRequirements(mod.InitRequirements, Module)
 			end
 			if init then
 				init(self)
@@ -110,20 +136,33 @@ function Core.ProtectedFunctions:initMod(Module)
 			-- now we call server/client specific
 			if runService:IsServer() and server then
 				if sget(mod, "ServerRequirements") then
-					self:waitForRequirements(mod.ServerRequirements)
+					self:waitForRequirements(mod.ServerRequirements, Module)
 				end
 				server(self)
 			elseif (not runService:IsServer()) and client then
 				if sget(mod, "ClientRequirements") then
-					self:waitForRequirements(mod.ClientRequirements)
+					self:waitForRequirements(mod.ClientRequirements, Module)
 				end
 				client(self)
 			end
+		end
+		if not table.find(loadedModules, Module) then
+			table.insert(loadedModules, Module)
+		end
+		if #allModules == #loadedModules then
+			self.Loaded.Value = true
 		end
 	end
 end
 
 function Core.ProtectedFunctions:init(moduleFolder)
+	-- Wait for the game to be loaded
+	if runService:IsClient() then
+		if not game:IsLoaded() then
+			game.Loaded:Wait()
+		end
+	end
+	
 	-- Core has a requirement for Utility, so we init that first.
 	local priorityTable = script:WaitForChild("PriorityTable")
 	local utility = script:WaitForChild("Utility")
@@ -143,6 +182,14 @@ function Core.ProtectedFunctions:init(moduleFolder)
 	
 	local modules = moduleFolder:GetDescendants()
 	
+	-- Make our AllModules table
+	for _, mod in pairs(moduleFolder:GetDescendants()) do
+		if mod:IsA("ModuleScript") then
+			table.insert(allModules, mod)
+		end
+	end
+	
+	-- Run all of our modules
 	for _, mod in pairs(moduleFolder:GetDescendants()) do
 		if runService:IsStudio() then
 			spawn(function()
