@@ -27,7 +27,10 @@ Core.__index = function(self, ind)
 		return Core.Functions[ind]["Function"]
 	else
 		warn(ind)
-		error(Core.getCallingScript(getfenv()).. " attempted to call a value of Core that doesn't exist. (" .. ind .. ")")
+		pcall(function()
+			rawget(Core.ProtectedFunctions, "getCallingScript")
+			error(Core.getCallingScript(getfenv()).. " attempted to call a value of Core that doesn't exist. (" .. ind .. ")")
+		end)
 	end
 end
 
@@ -80,17 +83,34 @@ function Core.ProtectedFunctions:waitForRequirements(reqs, module)
 end
 
 function Core.ProtectedFunctions:getGlobal(name)
-	if Core.References[name] ~= nil then
+	assert(typeof(name) ~= "table", "Please call getGlobal with : - " .. self.getCallingScript(getfenv()))
+	if self.References[name] == nil then
+		warn("Invalid global " .. name .. " requested by " .. self.getCallingScript(getfenv()))
 		return nil, 0
 	else
-		return Core.References[name]["Value"], Core.References[name]["Priority"]
+		return self.References[name]["Value"], self.References[name]["Priority"]
+	end
+end
+
+function Core.ProtectedFunctions:waitForGlobal(name)
+	assert(typeof(name) ~= "table", "Please call waitForGlobal with : - " .. self.getCallingScript(getfenv()))
+	coroutine.wrap(function()
+		wait(5)
+		if self.References[name] == nil then
+			warn("waitForGlobal call for " .. name .. " by " .. self.getCallingScript(getfenv()) .. " is yielding.")
+		end
+	end)()
+	while self.References[name] == nil do
+		self.References.Changed:Wait()
+		return self.References[name]["Value"], self.References[name]["Priority"]
 	end
 end
 
 function Core.ProtectedFunctions:setGlobal(name, value, priority)
+	assert(typeof(name) ~= "table", "Please call setGlobal with : - " .. self.getCallingScript(getfenv()))
 	if priority == true then
-		if Core.References[name] ~= nil and Core.References[name]["Priority"] ~= nil then
-			priority = Core.References[name]["Priority"]
+		if self.References[name] ~= nil and self.References[name]["Priority"] ~= nil then
+			priority = self.References[name]["Priority"]
 		else
 			priority = 1
 		end
@@ -99,7 +119,7 @@ function Core.ProtectedFunctions:setGlobal(name, value, priority)
 	assert(typeof(name) == "string", "Global name was not valid from " .. self.getCallingScript(getfenv()))
 	assert(typeof(priority) == "number" or priority == nil, "Invalid priority from " .. self.getCallingScript(getfenv()) .. " for " .. name)
 	
-	Core.References[name] = { -- this is also wrapped into a PriorityTable
+	self.References[name] = { -- this is also wrapped into a PriorityTable
 		["Priority"] = priority,
 		["Value"] = value,
 	}
@@ -206,6 +226,7 @@ end
 function Core.ProtectedFunctions:addFunction(functionName, func, priority, srcScript) -- Ensures that add Function is called properly, 
 	-- and then determines which function should take priority.
 	if srcScript == nil then
+		--assert(typeof(functionName) ~= "table", "Please call addFunction with : - " .. self.getCallingScript(getfenv()))
 		srcScript = "FAILED TO GET FUNCTION SOURCE"
 		pcall(function()
 			srcScript = getfenv(func).script:GetFullName()
@@ -223,6 +244,7 @@ function Core.ProtectedFunctions:addFunction(functionName, func, priority, srcSc
 end
 
 function Core.ProtectedFunctions:runFunctionWhenAvailable(name, ...)
+	assert(typeof(name) ~= "table", "Please call runFunctionWhenAvailable with : - " .. self.getCallingScript(getfenv()))
 	while self.Functions[name] == nil do
 		self.Functions.Changed:Wait()
 	end

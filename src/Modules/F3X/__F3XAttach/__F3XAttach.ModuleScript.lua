@@ -75,25 +75,30 @@ function F3XAttacher.init(core)
 				end
 			end
 			writeFromNodes(ourNodepoints, tool)
-			
 			for name, module in pairs(f3xTable) do
 				f3xTable[name] = {
 					["Script"] = module,
 					["Data"] = require(module),
 				}
 			end
-			
 			currentF3X[tool] = f3xTable
 			-- now attach all current attachments to the F3X brick
-			for moduleName, functionName in pairs(attachments) do
+			for moduleName, funcs in pairs(attachments) do
 				if f3xTable[moduleName] then
-					for typ, data in pairs(functionName) do
-						if typ == "Before" then
-							core.AttachBeforeRun(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
-						elseif typ == "After" then
-							core.AttachAfterRun(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
-						elseif typ == "Intercept" then
-							core.AttachIntercept(f3xTable[moduleName]["Script"], functionName, data["Function"], data["Priority"])
+					for funcName, data in pairs(funcs) do
+						if data["Before"] and #data["Before"] > 0 then
+							for _, entry in pairs(data["Before"]) do
+								core.AttachBeforeRun(f3xTable[moduleName]["Script"], funcName, entry["Function"], entry["Priority"])
+							end
+						end
+						if data["After"] and #data["After"] > 0 then
+							for _, entry in pairs(data["After"]) do
+								core.AttachAfterRun(f3xTable[moduleName]["Script"], funcName, entry["Function"], entry["Priority"])
+							end
+						end
+						if data["Intercept"] and data["Intercept"][1] then
+							core.AttachIntercept(f3xTable[moduleName]["Script"], funcName, 
+								data["Intercept"][1]["Function"], data["Intercept"][1]["Priority"])
 						end
 					end
 				end

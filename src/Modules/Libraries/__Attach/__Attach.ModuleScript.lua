@@ -59,6 +59,7 @@ function Attach:runAttached(callerTab, tab, Module, targ, ind, ...)
 	-- Create our function stack
 	local functionStack = self:createFunctionStack(tab, targ, Module)
 	local data = args
+	local dataReturnCount = 0 -- we use this so we can get the old returns from the func
 	for i, func in pairs(functionStack) do
 		if callerTab then
 			local env = getfenv(func["Function"])
@@ -66,8 +67,17 @@ function Attach:runAttached(callerTab, tab, Module, targ, ind, ...)
 		end
 		local succ, err
 		succ, err = pcall(function()
-			local ourRet = {func["Function"](table.unpack(data))}
-			data = ourRet
+			local ourRet = table.pack(func["Function"](table.unpack(data)))
+			if func["Type"] == "Run" then
+				local newData = ourRet
+				dataReturnCount = #newData
+				for _, v in pairs(data) do
+					table.insert(newData, v)
+				end
+				data = newData
+			else
+				data = ourRet
+			end
 		end)
 		if not succ then
 			warn(func["Type"] .. " function from " .. func["Creator"] .. ((ind and " for function " .. ind) or "") ..
@@ -79,6 +89,16 @@ function Attach:runAttached(callerTab, tab, Module, targ, ind, ...)
 			warn(err)
 		end
 	end
+	
+	-- now return back incase if this was a function call, and remove the data arguments for the original func call
+	-- make our new table based on the number of original returns
+	local trueReturns = {}
+	for i = 1, dataReturnCount do
+		if data[i] ~= nil then
+			table.insert(trueReturns, data[i])
+		end
+	end
+	return table.unpack(trueReturns)
 end
 
 function Attach.initFuncTab(Core, entry, Module, functionName)
@@ -101,7 +121,7 @@ function Attach.initFuncTab(Core, entry, Module, functionName)
 				Core.getCallingScript(getfenv()))
 			funcTab["__OriginalFunction"] = targFunc
 			entry["__Module"][functionName] = function(...)
-				Attach:runAttached(nil, entry[functionName], Module, targFunc, functionName, ...)
+				return Attach:runAttached(nil, entry[functionName], Module, targFunc, functionName, ...)
 			end
 		end
 		Core.wrapPriorityTable(funcTab, true)
@@ -188,7 +208,7 @@ function Attach:loadModule(Module) -- This function attaches to a module and loa
 					end
 					if typeof(targ) == "function" and tab[ind] ~= nil then
 						return function(...)
-							self:runAttached(callerTab, tab[ind], Module, targ, ind, ...)
+							return self:runAttached(callerTab, tab[ind], Module, targ, ind, ...)
 						end
 					else
 						return targ
@@ -200,7 +220,7 @@ function Attach:loadModule(Module) -- This function attaches to a module and loa
 				if typeof(v) == "function" then
 					mod[i] = function(...)
 						if tab[i] ~= nil then
-							self:runAttached(nil, tab[i], Module, v, i, ...)
+							return self:runAttached(nil, tab[i], Module, v, i, ...)
 						else
 							return v(...)
 						end

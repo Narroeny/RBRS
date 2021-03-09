@@ -21,7 +21,7 @@ or else other functions in the stack may error due to unexpected argument differ
 
 core.AttachAfterRun(Module, FunctionName, Function, Priority)
 AttachBeforeRun behaves the exact same as AttachBeforeRun and AttachIntercept, but instead the function will be called with the returns
-of the AttachIntercept function / the original module function.
+of the AttachIntercept function, and then the Before arguments.
 
 core.getAttachments(Module)
 Returns the attachments for a certain module.

@@ -1,6 +1,6 @@
 local Configuration = {
 	["RankToBypass"] = 1,
-	["AllowPlayerSelection"] = true,
+	["AllowLocalPlayerSelection"] = true,
 }
 
 return Configuration

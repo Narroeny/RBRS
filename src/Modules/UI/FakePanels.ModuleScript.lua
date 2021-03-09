@@ -5,9 +5,6 @@ local runService = game:GetService("RunService")
 function FakePanels.client(core)
 	local mainPanel = nil
 	
-	local gotMainPanel = Instance.new("BoolValue") -- used to wait until the ui module calls us
-	gotMainPanel.Value = false
-	
 	local runTimeFolder = Instance.new("Folder", script)
 	runTimeFolder.Name = "Runtime"
 	
@@ -15,18 +12,9 @@ function FakePanels.client(core)
 	core.wrapPriorityTable(fakePanelLayoutOrders)
 	
 	-- add our function to get main panels, and then wait for a coreui to tell us what it is
-	core:addFunction("SetMainPanel", function(panel)
+	core:addFunction("setMainPanel", function(panel)
 		mainPanel = panel
-		if gotMainPanel then
-			gotMainPanel.Value = true
-		end
 	end)
-	
-	if gotMainPanel.Value == false then
-		gotMainPanel.Changed:Wait()
-	end
-	
-	gotMainPanel:Destroy()
 	-- this assumes that the core ui doesn't try to fire twice, in which, uh oh
 	
 	-- actual stuff here
@@ -67,7 +55,7 @@ function FakePanels.client(core)
 		-- all other UIs shouldn't be touched layout order wise, so we're good maybe??
 	end
 	
-	core:addFunction("CreateCorePanel", function(panelName, _, priority)
+	core:addFunction("createCorePanel", function(panelName, _, priority)
 		if fakePanelLayoutOrders[panelName] == nil or fakePanelLayoutOrders[panelName]["Item"] == nil then
 			local fold = Instance.new("Folder", runTimeFolder)
 			fold.Name = panelName
@@ -81,7 +69,11 @@ function FakePanels.client(core)
 					fakePanelLayoutOrders[panelName]["Children"][child] = child.LayoutOrder
 					sortPanels()
 					runService.RenderStepped:Wait()
-					child.Parent = mainPanel
+					if mainPanel ~= nil then
+						child.Parent = mainPanel
+					else
+						warn("mainPanel does not exist. The UI that was created will not appear.")
+					end
 				end
 			end)
 			return fold
@@ -90,7 +82,7 @@ function FakePanels.client(core)
 		end
 	end, -1000)
 	
-	core:addFunction("GetCorePanel", function(panelName)
+	core:addFunction("getCorePanel", function(panelName)
 		if fakePanelLayoutOrders[panelName] then
 			return fakePanelLayoutOrders[panelName]["Items"]
 		end

@@ -82,7 +82,10 @@ function Utility.init(core)
 				backpack = localPlayer:WaitForChild("Backpack"),
 				character = localPlayer.Character or localPlayer.CharacterAdded:Wait(),
 				contextActionService = game:GetService("ContextActionService"),
+				guiService = game:GetService("GuiService"),
 				playerGui = localPlayer:WaitForChild("PlayerGui"),
+				userInputService = game:GetService("UserInputService"),
+				mouse = localPlayer:GetMouse(),
 				}) do
 				env[i] = v
 			end

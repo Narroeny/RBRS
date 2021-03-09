@@ -25,7 +25,7 @@ function CoreUI.client(core)
 	}
 	
 	local mainPanel = coreUI:WaitForChild("ButtonList")
-	core.SetMainPanel(mainPanel)
+	core.setMainPanel(mainPanel)
 	local buttonAsset = coreUI:WaitForChild("ButtonAsset")
 	
 	-- deal with our sliding now
@@ -36,18 +36,18 @@ function CoreUI.client(core)
 	slideMod:Activate(mouseOverAreas, buttonAreas)
 	
 	-- main ui sliding related functions
-	core:addFunction("LockCoreUI", function(setOpen) -- not recommended that you use this w/o a very good reason
+	core:addFunction("lockCoreUI", function(setOpen) -- not recommended that you use this w/o a very good reason
 		slideMod.Locked = true
 		if typeof(setOpen) == "boolean" then
 			slideMod:UpdateStatus(setOpen)
 		end
 	end)
 	
-	core:addFunction("UnlockCoreUI", function()
+	core:addFunction("unlockCoreUI", function()
 		slideMod.Locked = false
 	end)
 	
-	core:addFunction("CreateCoreButton", function(buttonName, func, layoutOrder, parent)
+	core:addFunction("createCoreButton", function(buttonName, func, layoutOrder, parent)
 		assert(typeof(buttonName) == "string", "Invalid button name sent by " .. core.getCallingScript(getfenv()))
 		assert(typeof(func) == "function", "Invalid function sent by " .. core.getCallingScript(getfenv()))
 		if typeof(layoutOrder) ~= "number" then
@@ -70,9 +70,9 @@ function CoreUI.client(core)
 end
 
 CoreUI.ClientRequirements = {
-	"hideChat",
-	"showChat",
-	"SetMainPanel",
+	"setMainPanel",
+	"createCorePanel",
+	"getCorePanel",
 }
 
 return CoreUI

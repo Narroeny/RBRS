@@ -1,5 +1,6 @@
 local RemoveF3XAnchor = {}
 local config = require(script:WaitForChild("Configuration"))
+print("asdf")
 
 function RemoveF3XAnchor.client(core)
 	--core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
@@ -26,6 +27,14 @@ function RemoveF3XAnchor.client(core)
 					v.Visible = false
 				end
 			end
+			core.UI.Dock.ToolList.List.ChildAdded:Connect(function(child) -- quick patch until F3XTools system releases
+				if child:IsA("ImageButton") then
+					wait(0.5)
+					if child.Image == icon then
+						child:Destroy()
+					end
+				end
+			end)
 		end)
 	end
 end
