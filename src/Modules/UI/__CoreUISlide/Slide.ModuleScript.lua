@@ -1,19 +1,4 @@
 local Slide = {}
--- Table values
-Slide.Locked = false -- locks the UI closed
-
-Slide.UIOpen = false -- final "is ui open" variable
-Slide.ToggleOpen = false -- for when the button is clicked or something
-Slide.CurrentEntered = 0 -- used to tell how many of our UIs have been dragged into
-
-Slide.ClosePosition = nil
-Slide.OpenPosition = nil
-Slide.Active = false
-
--- these values are written when this is called
-Slide.UI = nil
-Slide.Configuration = nil
-Slide.Core = nil
 
 function Slide:SlideSizeListener() -- Ensures that the slide is in the proper close position
 	self.ClosePosition = UDim2.new(0, -self.UI.AbsoluteSize.X, 0, 0)
@@ -76,5 +61,25 @@ function Slide:Activate(openAreas, buttons) -- main function
 		end
 	end
 end
+
+function Slide:Reset()
+	-- Table values
+	self.Locked = false -- locks the UI closed
+
+	self.UIOpen = false -- final "is ui open" variable
+	self.ToggleOpen = false -- for when the button is clicked or something
+	self.CurrentEntered = 0 -- used to tell how many of our UIs have been dragged into
+
+	self.ClosePosition = nil
+	self.OpenPosition = nil
+	self.Active = false
+
+	-- these values are written when this is called
+	self.UI = nil
+	self.Configuration = nil
+	self.Core = nil
+end
+
+Slide:Reset()
 
 return Slide

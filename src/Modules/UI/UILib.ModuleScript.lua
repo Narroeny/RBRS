@@ -65,12 +65,15 @@ function UILibrary.client(core)
 		end
 	end)
 	
-	core:addFunction("enableDragging", function(dragFrame, dragHitbox) 
+	core:addFunction("enableDragging", function(dragFrame, dragHitbox, extentsObject) 
 		-- allows a UI to be dragged on mobile and desktop
 		assert(typeof(dragFrame) == "Instance" and dragFrame:IsA("GuiObject"), 
 			"Invalid dragging frame sent by " .. core.getCallingScript(getfenv()))
 		if dragHitbox == nil then
 			dragHitbox = dragFrame
+		end
+		if extentsObject == nil then
+			extentsObject = dragFrame
 		end
 		
 		local dragging = false
@@ -104,14 +107,14 @@ function UILibrary.client(core)
 				local inset = guiService:GetGuiInset()
 				if (inp.Position.X - uiOffsetX) < 0 then
 					d = Vector2.new(-dragStart.X + uiOffsetX, d.Y)
-				elseif (inp.Position.X + (dragFrame.AbsoluteSize.X - uiOffsetX)) > (mouse.ViewSizeX) then
-					d = Vector2.new(mouse.ViewSizeX - dragStart.X - (dragFrame.AbsoluteSize.X - uiOffsetX), d.Y)
+				elseif (inp.Position.X + (extentsObject.AbsoluteSize.X - uiOffsetX)) > (mouse.ViewSizeX) then
+					d = Vector2.new(mouse.ViewSizeX - dragStart.X - (extentsObject.AbsoluteSize.X - uiOffsetX), d.Y)
 					-- dragStart.X, + uiOffsetX
 				end
 				if (inp.Position.Y - uiOffsetY) < 0 then
 					d = Vector2.new(d.X, -dragStart.Y + uiOffsetY)
-				elseif (inp.Position.Y + (dragFrame.AbsoluteSize.Y - uiOffsetY)) > (mouse.ViewSizeY + inset.Y) then
-					d = Vector2.new(d.X, mouse.ViewSizeY + inset.Y - dragStart.Y - (dragFrame.AbsoluteSize.Y - uiOffsetY))
+				elseif (inp.Position.Y + (extentsObject.AbsoluteSize.Y - uiOffsetY)) > (mouse.ViewSizeY + inset.Y) then
+					d = Vector2.new(d.X, mouse.ViewSizeY + inset.Y - dragStart.Y - (extentsObject.AbsoluteSize.Y - uiOffsetY))
 				end
 				dragFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
 			end

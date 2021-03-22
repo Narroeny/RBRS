@@ -18,7 +18,27 @@
 local Applet = {}
 local topBarAsset = script:WaitForChild("TopBar")
 
+local AppletToggle = {}
+AppletToggle.__index = AppletToggle
+
+function AppletToggle:Open()
+	self.UI.Visible = true
+	AppletToggle.Core.enforceUIBounds(self.TopBar, self.UI)
+	if self["OpenFunction"] ~= nil then
+		self.OpenFunction()
+	end
+end
+function AppletToggle:Close()
+	self.UI.Visible = false
+	if self["CloseFunction"] ~= nil then
+		self.CloseFunction()
+	end
+end
+
 function Applet.client(core)
+	local buttonApplets = {} -- holds tables for applets so that we can get and open them externally
+	AppletToggle.Core = core
+	
 	core:addFunction("createApplet", function(data)
 		assert(typeof(data) == "table", "Invalid data (or no data) sent by " .. core.getCallingScript(getfenv()))
 		assert(typeof(data["Frame"]) == "Instance" and data["Frame"]:IsA("GuiObject"),
@@ -46,13 +66,15 @@ function Applet.client(core)
 		end
 		-- ok now that all of our data is correct, we start doing stuff
 		local newApplet = {}
-		newApplet.UI = data["Frame"]:Clone()
+		data["Frame"]:Clone().Parent = data["Frame"].Parent -- replace the UI since we use it here
+		newApplet.UI = data["Frame"]
 		newApplet.UI.Visible = false
 		newApplet.UI.Parent = core:getGlobal("UI")
 		newApplet.TopBar = topBarAsset:Clone()
 		newApplet.TopBar.Parent = newApplet.UI
 		newApplet.OpenFunction = data["OpenFunction"]
 		newApplet.CloseFunction = data["CloseFunction"]
+		setmetatable(newApplet, AppletToggle)
 		
 		-- resize our UI if needed
 		if data["SetSize"] then
@@ -60,25 +82,19 @@ function Applet.client(core)
 		end
 		
 		-- now create our draggable stuff
-		core.enableDragging(newApplet.UI, newApplet.TopBar)
+		core.enableDragging(newApplet.UI, newApplet.TopBar, newApplet.TopBar)
 		
 		-- now deal with our close button
 		newApplet.TopBar:WaitForChild("CloseButton").MouseButton1Click:Connect(function()
-			newApplet.UI.Visible = false
-			if newApplet["CloseFunction"] ~= nil then
-				newApplet.CloseFunction()
-			end
+			newApplet:Close()
 		end)
 		
 		-- now deal with creating our open button
 		if data["ButtonName"] ~= nil then
 			core.createCoreButton(data["ButtonName"], function()
-				newApplet.UI.Visible = true
-				core.enforceUIBounds(newApplet.TopBar, newApplet.UI)
-				if newApplet["OpenFunction"] ~= nil then
-					newApplet.OpenFunction()
-				end
+				newApplet:Open()
 			end, data["ButtonPriority"], data["Panel"])
+			buttonApplets[data["ButtonName"]] = newApplet
 		end
 		
 		-- center our UI
@@ -92,6 +108,10 @@ function Applet.client(core)
 		
 		return newApplet
 	end) 
+	
+	core:addFunction("getApplets", function()
+		return buttonApplets
+	end)	
 end
 
 Applet.ClientRequirements = {

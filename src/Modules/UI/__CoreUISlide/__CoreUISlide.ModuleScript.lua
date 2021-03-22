@@ -9,6 +9,7 @@ function CoreUI.client(core)
 	core.loadEnv(getfenv())
 	local ui = script:WaitForChild("RBRSUI", 5)
 	assert(ui ~= nil, "UI is missing from CoreUISlide!")
+	ui:Clone().Parent = script -- replace the UI
 	ui.Parent = playerGui
 	
 	core:setGlobal("UI", ui) -- set our UI global
@@ -29,22 +30,23 @@ function CoreUI.client(core)
 	local buttonAsset = coreUI:WaitForChild("ButtonAsset")
 	
 	-- deal with our sliding now
-	local slideMod = require(script:WaitForChild("Slide"))
-	slideMod.UI = coreUI
-	slideMod.Configuration = Configuration
-	slideMod.Core = core
-	slideMod:Activate(mouseOverAreas, buttonAreas)
+	local Slide = require(script:WaitForChild("Slide"))
+	Slide:Reset()
+	Slide.UI = coreUI
+	Slide.Configuration = Configuration
+	Slide.Core = core
+	Slide:Activate(mouseOverAreas, buttonAreas)
 	
 	-- main ui sliding related functions
 	core:addFunction("lockCoreUI", function(setOpen) -- not recommended that you use this w/o a very good reason
-		slideMod.Locked = true
+		Slide.Locked = true
 		if typeof(setOpen) == "boolean" then
-			slideMod:UpdateStatus(setOpen)
+			Slide:UpdateStatus(setOpen)
 		end
 	end)
 	
 	core:addFunction("unlockCoreUI", function()
-		slideMod.Locked = false
+		Slide.Locked = false
 	end)
 	
 	core:addFunction("createCoreButton", function(buttonName, func, layoutOrder, parent)
@@ -71,8 +73,6 @@ end
 
 CoreUI.ClientRequirements = {
 	"setMainPanel",
-	"createCorePanel",
-	"getCorePanel",
 }
 
 return CoreUI

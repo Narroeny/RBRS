@@ -8,7 +8,7 @@ chatCommands.Commands = {}
 function chatCommands:chatHandler(plr) -- this command parser could be improved
 	plr.Chatted:Connect(function(msg)
 		if string.find(msg, chatCommands.Configuration.Prefix) == 1 then
-			msg = string.gsub(msg, "!", "", 1)
+			msg = string.gsub(msg, chatCommands.Configuration.Prefix, "", 1)
 			local parts = string.split(msg, " ")
 			if chatCommands.Commands[parts[1]] then
 				local command = chatCommands.Commands[parts[1]]
