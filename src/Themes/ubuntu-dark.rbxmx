@@ -575,6 +575,7 @@
             <token name="Font">3</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -741,6 +742,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
         <Ref name="NextSelectionRight">null</Ref>
@@ -831,6 +833,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
         <Ref name="NextSelectionRight">null</Ref>
@@ -1184,6 +1187,7 @@
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>
@@ -1345,7 +1349,7 @@
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{67CF176A-C6F3-44F0-B224-36008884DE04}</string>
+        <string name="ScriptGuid">{413E756C-1467-4480-9000-6CEB36D044E8}</string>
         <string name="Source"><![CDATA[local toggle = {}
 toggle.__index = toggle
 
@@ -1435,6 +1439,7 @@ return toggle
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -1517,6 +1522,7 @@ return toggle
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="MultiLine">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>

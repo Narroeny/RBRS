@@ -139,6 +139,7 @@
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>
@@ -217,6 +218,7 @@
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>
@@ -295,6 +297,7 @@
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>

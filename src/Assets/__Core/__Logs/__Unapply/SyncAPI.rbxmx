@@ -27,7 +27,7 @@
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{8E0974A2-7113-49F6-B9E8-B52D5AA30AC8}</string>
+        <string name="ScriptGuid">{07DA9745-BE22-4A9F-9220-E124FAD442BE}</string>
         <string name="Source">-- References
 SyncAPI = script.Parent;
 Tool = SyncAPI.Parent;

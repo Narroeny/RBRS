@@ -46,6 +46,7 @@
         <token name="Font">12</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -128,6 +129,7 @@
         <token name="Font">17</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -189,7 +191,7 @@
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{F1CF7BE7-F280-49F6-A224-613B74F50E88}</string>
+        <string name="ScriptGuid">{F5FE89CE-C807-4C85-B796-52FDE0E49965}</string>
         <string name="Source"><![CDATA[-- This just runs our core, doing it this way to make our life easier. The only thing we pass is the UI
 require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitForChild("Assets"):WaitForChild("Core")).Load(script.Parent)
 ]]></string>
@@ -398,6 +400,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
             <token name="Font">3</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -704,6 +707,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">17</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>
@@ -783,6 +787,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <bool name="Modal">false</bool>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
@@ -865,6 +870,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <bool name="Modal">false</bool>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
@@ -947,6 +953,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <bool name="Modal">false</bool>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
@@ -1029,6 +1036,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">3</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <bool name="Modal">false</bool>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
@@ -1111,6 +1119,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitFo
           <token name="Font">17</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <bool name="Modal">false</bool>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>

@@ -39,10 +39,25 @@
         <Y>0</Y>
         <Z>0</Z>
       </Vector3>
+      <bool name="NeedsPivotMigration">true</bool>
       <Ref name="PrimaryPart">null</Ref>
       <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
+      <CoordinateFrame name="WorldPivot">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+        <R00>1</R00>
+        <R01>0</R01>
+        <R02>0</R02>
+        <R10>0</R10>
+        <R11>1</R11>
+        <R12>0</R12>
+        <R20>0</R20>
+        <R21>0</R21>
+        <R22>1</R22>
+      </CoordinateFrame>
     </Properties>
     <Item class="Part" referent="1">
       <Properties>
@@ -92,6 +107,20 @@
         <bool name="Locked">false</bool>
         <bool name="Massless">false</bool>
         <token name="Material">256</token>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
         <float name="Reflectance">0</float>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>
@@ -208,6 +237,20 @@
         <bool name="Locked">false</bool>
         <bool name="Massless">false</bool>
         <token name="Material">256</token>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
         <float name="Reflectance">0</float>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>
@@ -324,6 +367,20 @@
         <bool name="Locked">false</bool>
         <bool name="Massless">false</bool>
         <token name="Material">256</token>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
         <float name="Reflectance">0</float>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>
@@ -440,6 +497,20 @@
         <bool name="Locked">false</bool>
         <bool name="Massless">false</bool>
         <token name="Material">256</token>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
         <float name="Reflectance">0</float>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>

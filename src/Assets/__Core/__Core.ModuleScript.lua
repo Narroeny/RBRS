@@ -13,7 +13,7 @@ if conf.GivePrivateServerOwnerAdmin and game.PrivateServerId ~= "" and game.Priv
 end
 
 function module.getVer()
-	return "1.6.1.dev"
+	return "1.6.2.dev"
 end
 
 function module.getCoreTable(toadd) -- passed arguments are stuff we want to add to the table, like a new history log or w/e.

@@ -259,6 +259,7 @@
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -316,7 +317,7 @@
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{130C0D3E-1EFF-4991-A7D4-CB1FD569F1A2}</string>
+                <string name="ScriptGuid">{3B6696C2-1915-42B3-A959-68553D0A0F2D}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -511,6 +512,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -568,7 +570,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{AB4BB430-9329-44C4-B7F1-F8C601378771}</string>
+                <string name="ScriptGuid">{970EA6C4-B887-4859-BEF4-2D41FE2B0FC6}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -763,6 +765,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -820,7 +823,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{31B341FA-F5AE-49E3-B37C-A8DC72076AAE}</string>
+                <string name="ScriptGuid">{D229ED03-0A3F-4A21-B44C-7191169A4F15}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -1015,6 +1018,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -1072,7 +1076,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{412676E8-2DC6-432F-98D4-12FF7DE10213}</string>
+                <string name="ScriptGuid">{4E7972D6-4D81-4DE5-9233-E7ED3E6E4934}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -1267,6 +1271,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -1324,7 +1329,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{01D1787C-93A4-4B0B-BF60-92BC5303CBFF}</string>
+                <string name="ScriptGuid">{E729CD29-2094-4675-AED6-98D7D7AEF460}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -1519,6 +1524,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -1576,7 +1582,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{B0E4AFDC-7F03-46F3-AF09-320841BA9E26}</string>
+                <string name="ScriptGuid">{AAEC6991-5B1F-4376-A39B-5BDA01C30FD8}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -1828,6 +1834,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2009,6 +2016,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2190,6 +2198,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2371,6 +2380,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2552,6 +2562,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2733,6 +2744,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -2914,6 +2926,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -3095,6 +3108,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -3276,6 +3290,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -3457,6 +3472,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -3638,6 +3654,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -3819,6 +3836,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -4000,6 +4018,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -4181,6 +4200,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -5145,6 +5165,7 @@ return Component;</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -5227,6 +5248,7 @@ roblox.com/library/142485815/import</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -5362,6 +5384,7 @@ roblox.com/library/142485815/import</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -5446,6 +5469,7 @@ roblox.com/library/142485815/import</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -5525,6 +5549,7 @@ roblox.com/library/142485815/import</string>
               <token name="Font">1</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -5603,6 +5628,7 @@ roblox.com/library/142485815/import</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -5683,6 +5709,7 @@ roblox.com/library/142485815/import</string>
           <token name="Font">2</token>
           <int name="LayoutOrder">0</int>
           <float name="LineHeight">1</float>
+          <int name="MaxVisibleGraphemes">-1</int>
           <Ref name="NextSelectionDown">null</Ref>
           <Ref name="NextSelectionLeft">null</Ref>
           <Ref name="NextSelectionRight">null</Ref>
@@ -5739,7 +5766,7 @@ roblox.com/library/142485815/import</string>
               <null>
               </null>
             </Content>
-            <string name="ScriptGuid">{CFD7475A-4342-42C7-852B-FF4B23081BFC}</string>
+            <string name="ScriptGuid">{D5A5B70A-6CF7-41ED-AC6C-080C47F06B5D}</string>
             <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -6036,6 +6063,7 @@ return Component;</string>
             <token name="Font">2</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -6340,6 +6368,7 @@ return Component;</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -6420,6 +6449,7 @@ TIP: Press R while hovering over a part to copy its color.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -6669,6 +6699,7 @@ TIP: Press R while hovering over a part to copy its color.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -6749,6 +6780,7 @@ TIP: Click a part's surface to select it quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -6998,6 +7030,7 @@ TIP: Click a part's surface to select it quickly.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7076,6 +7109,7 @@ TIP: Click a part's surface to select it quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7325,6 +7359,7 @@ TIP: Click a part's surface to select it quickly.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7405,6 +7440,7 @@ TIP: Press Enter to toggle anchor quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7654,6 +7690,7 @@ TIP: Press Enter to toggle anchor quickly.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7734,6 +7771,7 @@ TIP: Click and drag where you want your part to be.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -7983,6 +8021,7 @@ TIP: Click and drag where you want your part to be.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8065,6 +8104,7 @@ NOTE: If HttpService is not enabled, you must type the mesh or image asset ID di
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8314,6 +8354,7 @@ NOTE: If HttpService is not enabled, you must type the mesh or image asset ID di
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8398,6 +8439,7 @@ NOTE: If HttpService isn't enabled, you must manually type an image's ID.</strin
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8647,6 +8689,7 @@ NOTE: If HttpService isn't enabled, you must manually type an image's ID.</strin
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8727,6 +8770,7 @@ TIP: Click on the surface of any part to change a light's side quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -8976,6 +9020,7 @@ TIP: Click on the surface of any part to change a light's side quickly.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -9054,6 +9099,7 @@ TIP: Click on the surface of any part to change a light's side quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -9303,6 +9349,7 @@ TIP: Click on the surface of any part to change a light's side quickly.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -9385,6 +9432,7 @@ NOTE: This tool does not work in Roblox Studio.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -9634,6 +9682,7 @@ NOTE: This tool does not work in Roblox Studio.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -9714,6 +9763,7 @@ TIP: Press Enter to toggle collision quickly.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -10051,6 +10101,7 @@ TIP: Press Enter to toggle collision quickly.</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10133,6 +10184,7 @@ LAST - Relative to the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10211,6 +10263,7 @@ LAST - Relative to the last part selected</string>
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10289,6 +10342,7 @@ LAST - Relative to the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10481,6 +10535,7 @@ LAST - Relative to the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10573,6 +10628,7 @@ TIP: Hit the - key to quickly type increments.</string>
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -10652,6 +10708,7 @@ TIP: Hit the - key to quickly type increments.</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -10730,6 +10787,7 @@ TIP: Hit the - key to quickly type increments.</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -11067,6 +11125,7 @@ TIP: Hit the - key to quickly type increments.</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11157,6 +11216,7 @@ TIP: Use your right-side number keypad to rotate exactly by the current incremen
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11349,6 +11409,7 @@ TIP: Use your right-side number keypad to rotate exactly by the current incremen
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11431,6 +11492,7 @@ LAST - Each part around the center of the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11509,6 +11571,7 @@ LAST - Each part around the center of the last part selected</string>
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11587,6 +11650,7 @@ LAST - Each part around the center of the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -11666,6 +11730,7 @@ LAST - Each part around the center of the last part selected</string>
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -11744,6 +11809,7 @@ LAST - Each part around the center of the last part selected</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -12081,6 +12147,7 @@ LAST - Each part around the center of the last part selected</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -12161,6 +12228,7 @@ TIP: Click on a part to focus the handles on it.</string>
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -12296,6 +12364,7 @@ TIP: Click on a part to focus the handles on it.</string>
                   <token name="Font">2</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -12374,6 +12443,7 @@ TIP: Click on a part to focus the handles on it.</string>
                   <token name="Font">1</token>
                   <int name="LayoutOrder">0</int>
                   <float name="LineHeight">1</float>
+                  <int name="MaxVisibleGraphemes">-1</int>
                   <Ref name="NextSelectionDown">null</Ref>
                   <Ref name="NextSelectionLeft">null</Ref>
                   <Ref name="NextSelectionRight">null</Ref>
@@ -12465,6 +12535,7 @@ TIP: Hold the R key, and click and drag the snap point of a part (in the directi
                 <token name="Font">1</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -12543,6 +12614,7 @@ TIP: Hold the R key, and click and drag the snap point of a part (in the directi
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -12602,7 +12674,7 @@ TIP: Hold the R key, and click and drag the snap point of a part (in the directi
               <null>
               </null>
             </Content>
-            <string name="ScriptGuid">{9BE175F6-C845-45C0-A569-964D4CF93F5B}</string>
+            <string name="ScriptGuid">{2D5FD47F-54DC-4C8E-B4D2-3A92BB798120}</string>
             <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -12976,6 +13048,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -13032,7 +13105,7 @@ return Component;</string>
                   <null>
                   </null>
                 </Content>
-                <string name="ScriptGuid">{D3809950-04C2-41F6-96EB-998F36D1E582}</string>
+                <string name="ScriptGuid">{B5270EF1-3DE7-4446-9F75-3619435543A0}</string>
                 <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -13261,7 +13334,7 @@ return Component.Start();</string>
             <null>
             </null>
           </Content>
-          <string name="ScriptGuid">{6B46F262-6047-409A-9364-B89F53ED9FCA}</string>
+          <string name="ScriptGuid">{52208904-FFE9-4072-8F96-749B31C7518C}</string>
           <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -13618,6 +13691,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -13700,6 +13774,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -13894,6 +13969,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -14040,6 +14116,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -14129,6 +14206,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -14187,7 +14265,7 @@ return Component;</string>
               <null>
               </null>
             </Content>
-            <string name="ScriptGuid">{63FFE756-9C02-4281-84E9-22369B39296A}</string>
+            <string name="ScriptGuid">{0025E066-1F03-4F5C-9F54-B46A7E1A8B3A}</string>
             <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -14384,6 +14462,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -14466,6 +14545,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -14660,6 +14740,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -14806,6 +14887,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -14875,7 +14957,7 @@ return Component;</string>
               <null>
               </null>
             </Content>
-            <string name="ScriptGuid">{32C384F9-0EFB-4CFA-93CF-28BF1585D3AB}</string>
+            <string name="ScriptGuid">{73089921-B779-4794-8CD0-CCC5434AA2ED}</string>
             <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -15072,6 +15154,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -15154,6 +15237,7 @@ return Component;</string>
             <token name="Font">1</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="Modal">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -15348,6 +15432,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -15494,6 +15579,7 @@ return Component;</string>
               <token name="Font">4</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -15572,6 +15658,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -15641,7 +15728,7 @@ return Component;</string>
               <null>
               </null>
             </Content>
-            <string name="ScriptGuid">{630B0005-1054-4DD4-9C15-3062A55408B0}</string>
+            <string name="ScriptGuid">{60058305-8873-4459-A60F-81532D7E2660}</string>
             <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -15721,7 +15808,7 @@ return Component;</string>
             <null>
             </null>
           </Content>
-          <string name="ScriptGuid">{AD5B16FC-2CA6-4AF8-A168-AD7E8174E18D}</string>
+          <string name="ScriptGuid">{A7E0823E-934B-40B9-9A97-6FFD71BC4B0F}</string>
           <string name="Source">local View = script.Parent;
 while not _G.GetLibraries do wait() end;
 
@@ -15828,6 +15915,20 @@ return Component;</string>
         <bool name="Locked">true</bool>
         <bool name="Massless">false</bool>
         <token name="Material">256</token>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
         <float name="Reflectance">0</float>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>
@@ -16214,6 +16315,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">1</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -16291,6 +16393,7 @@ return Component;</string>
                 <token name="Font">3</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
                 <Ref name="NextSelectionRight">null</Ref>
@@ -16730,6 +16833,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -16808,6 +16912,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -17034,6 +17139,7 @@ return Component;</string>
               <token name="Font">3</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -17112,6 +17218,7 @@ return Component;</string>
               <token name="Font">16</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -17430,6 +17537,7 @@ return Component;</string>
             <token name="Font">16</token>
             <int name="LayoutOrder">1</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -17647,6 +17755,7 @@ return Component;</string>
             <token name="Font">2</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -18043,6 +18152,7 @@ return Component;</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <bool name="MultiLine">false</bool>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
@@ -18188,6 +18298,7 @@ return Component;</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <bool name="MultiLine">false</bool>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
@@ -18424,6 +18535,7 @@ return Component;</string>
                 <token name="Font">2</token>
                 <int name="LayoutOrder">0</int>
                 <float name="LineHeight">1</float>
+                <int name="MaxVisibleGraphemes">-1</int>
                 <bool name="MultiLine">false</bool>
                 <Ref name="NextSelectionDown">null</Ref>
                 <Ref name="NextSelectionLeft">null</Ref>
@@ -18603,6 +18715,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -18682,6 +18795,7 @@ return Component;</string>
             <token name="Font">2</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -18930,6 +19044,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -19157,6 +19272,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <bool name="MultiLine">false</bool>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
@@ -19359,6 +19475,7 @@ return Component;</string>
             <token name="Font">2</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -19437,6 +19554,7 @@ return Component;</string>
             <token name="Font">2</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -19685,6 +19803,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -19820,6 +19939,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -19990,6 +20110,7 @@ return Component;</string>
               <token name="Font">0</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <bool name="Modal">false</bool>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
@@ -20185,6 +20306,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -20355,6 +20477,7 @@ return Component;</string>
               <token name="Font">0</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <bool name="Modal">false</bool>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
@@ -20550,6 +20673,7 @@ return Component;</string>
               <token name="Font">2</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>
               <Ref name="NextSelectionRight">null</Ref>
@@ -20720,6 +20844,7 @@ return Component;</string>
               <token name="Font">0</token>
               <int name="LayoutOrder">0</int>
               <float name="LineHeight">1</float>
+              <int name="MaxVisibleGraphemes">-1</int>
               <bool name="Modal">false</bool>
               <Ref name="NextSelectionDown">null</Ref>
               <Ref name="NextSelectionLeft">null</Ref>

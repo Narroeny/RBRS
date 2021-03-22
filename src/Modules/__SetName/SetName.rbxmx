@@ -86,6 +86,7 @@
         <token name="Font">12</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -180,6 +181,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="MultiLine">true</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -268,6 +270,7 @@
         <token name="Font">12</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -362,6 +365,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -444,6 +448,7 @@
         <token name="Font">12</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -537,6 +542,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
         <Ref name="NextSelectionRight">null</Ref>
@@ -615,6 +621,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
         <Ref name="NextSelectionRight">null</Ref>
@@ -694,6 +701,7 @@
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
@@ -888,6 +896,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -975,6 +984,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -1111,6 +1121,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -1198,6 +1209,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -1334,6 +1346,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -1421,6 +1434,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -1614,6 +1628,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -1701,6 +1716,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -1837,6 +1853,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -1924,6 +1941,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>
@@ -2060,6 +2078,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <bool name="MultiLine">false</bool>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
@@ -2147,6 +2166,7 @@
             <token name="Font">17</token>
             <int name="LayoutOrder">0</int>
             <float name="LineHeight">1</float>
+            <int name="MaxVisibleGraphemes">-1</int>
             <Ref name="NextSelectionDown">null</Ref>
             <Ref name="NextSelectionLeft">null</Ref>
             <Ref name="NextSelectionRight">null</Ref>

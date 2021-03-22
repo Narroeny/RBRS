@@ -85,6 +85,7 @@
         <token name="Font">17</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
         <Ref name="NextSelectionRight">null</Ref>
@@ -167,7 +168,7 @@
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{E9A9A58A-3110-4284-A5D1-6F5572301652}</string>
+        <string name="ScriptGuid">{7926521F-D3B3-441E-BA4A-2398B444CBE1}</string>
         <string name="Source">---	Manages the cleaning of events and other things.
 -- Useful for encapsulating state and make deconstructors easy
 -- @classmod Maid
@@ -281,7 +282,7 @@ return Maid</string>
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{123CBFBE-3CC2-409C-BC08-657BE45C5866}</string>
+        <string name="ScriptGuid">{1985F5C2-0C92-483D-9CA0-77B26900D3D5}</string>
         <string name="Source">SupportLibrary = {};
 
 function SupportLibrary.FindTableOccurrences(Haystack, Needle)
@@ -1125,7 +1126,7 @@ return SupportLibrary;</string>
           <null>
           </null>
         </Content>
-        <string name="ScriptGuid">{33325C8A-04F7-4C1D-8C15-01EE3DE63FE0}</string>
+        <string name="ScriptGuid">{DEB1CE2E-E70F-48E6-97F1-A4C49395F3C0}</string>
         <string name="Source">local RunService = game:GetService 'RunService'
 local Workspace = game:GetService 'Workspace'
 local Players = game:GetService 'Players'
@@ -1553,6 +1554,7 @@ return Handles</string>
         <token name="Font">3</token>
         <int name="LayoutOrder">0</int>
         <float name="LineHeight">1</float>
+        <int name="MaxVisibleGraphemes">-1</int>
         <bool name="Modal">false</bool>
         <Ref name="NextSelectionDown">null</Ref>
         <Ref name="NextSelectionLeft">null</Ref>
