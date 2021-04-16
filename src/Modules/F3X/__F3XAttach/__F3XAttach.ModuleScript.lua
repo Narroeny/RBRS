@@ -56,7 +56,7 @@ function F3XAttacher.init(core)
 			}
 		}
 	]]
-	local ourNodepoints = (runService:IsServer() and ServerNodepoints) or ClientNodepoints
+	local ourNodepoints = (RunService:IsServer() and ServerNodepoints) or ClientNodepoints
 	
 	local function hookToF3X(tool)
 		local f3xTable = {}
@@ -130,15 +130,15 @@ function F3XAttacher.init(core)
 		player.CharacterAdded:Connect(pseudo)
 	end
 	
-	if runService:IsServer() then
-		for _, player in pairs(players:GetPlayers()) do
+	if RunService:IsServer() then
+		for _, player in pairs(Players:GetPlayers()) do
 			attachToPlayer(player)
 		end
-		players.PlayerAdded:Connect(function(player)
+		Players.PlayerAdded:Connect(function(player)
 			attachToPlayer(player)
 		end)
 	else
-		attachToPlayer(localPlayer)
+		attachToPlayer(LocalPlayer)
 	end
 	
 	core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)

@@ -24,7 +24,7 @@ PriorityTable.__newindex = function(self, ind, newEntry)
 			["__nonTable"] = true,
 			["Priority"] = 1,
 		}
-	elseif curEntry == nil or newEntry["Priority"] == nil or curEntry["Priority"] == nil or curEntry["Priority"] <= newEntry["Priority"] then
+	elseif curEntry == nil or curEntry["Priority"] == nil or curEntry["Priority"] <= newEntry["Priority"] then
 		if self.__multipleValues and self.__isBaseTable then
 			if self.trueValues[ind] == nil then
 				self.trueValues[ind] = {}
@@ -78,7 +78,7 @@ function PriorityTable:sort(ind)
 end
 
 function PriorityTable:get(ind)
-	assert(self.__multipleValues, "Can not use :get() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :get() with a non-MultipleValues table.")
 	if self.trueValues[ind] == nil then
 		return {}
 	end
@@ -97,7 +97,7 @@ function PriorityTable:get(ind)
 end
 
 function PriorityTable:rawget(ind)
-	assert(self.__multipleValues, "Can not use :rawget() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :rawget() with a non-MultipleValues table.")
 	if self.trueValues[ind] == nil then
 		return {}
 	end
@@ -111,7 +111,7 @@ function PriorityTable:rawget(ind)
 end
 
 function PriorityTable:remove(ind, index)
-	assert(self.__multipleValues, "Can not use :remove() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :remove() with a non-MultipleValues table.")
 	assert(typeof(index) == "number" or typeof(index) == "table", "Second argument (index) must be a number or array.")
 	assert(self.trueValues[ind], "Index does not exist in trueValues")
 	if typeof(index) == "number" then
@@ -128,7 +128,7 @@ function PriorityTable:remove(ind, index)
 end
 
 function PriorityTable:set(ind, index, val)
-	assert(self.__multipleValues, "Can not use :set() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :set() with a non-MultipleValues table.")
 	assert(typeof(index) == "number", "Second argument (index) must be a number.")
 	if self.trueValues[ind] == nil then
 		self.trueValues[ind] = {}
@@ -155,7 +155,7 @@ function PriorityTable:set(ind, index, val)
 end
 
 function PriorityTable:insert(ind, value)
-	assert(self.__multipleValues, "Can not use :insert() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :insert() with a non-MultipleValues table.")
 	if self.trueValues[ind] == nil then
 		self.trueValues[ind] = {}
 	end
@@ -163,7 +163,7 @@ function PriorityTable:insert(ind, value)
 end
 
 function PriorityTable:findfromval(ind, value, valueName, returnmult)
-	assert(self.__multipleValues, "Can not use :findfromval() with a nonMultipleValues table.")
+	assert(self.__multipleValues, "Can not use :findfromval() with a non-MultipleValues table.")
 	if not self.trueValues[ind] then
 		return nil
 	end

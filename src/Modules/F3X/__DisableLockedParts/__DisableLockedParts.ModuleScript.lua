@@ -35,16 +35,20 @@ end
 
 function DisableLockedF3XParts.server(core)
 	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
-		local clientCharacter = Client.Character
-		local parts = core.GetSyncModifyingParts(ActionName, ...)
-		if parts ~= nil then
-			for _, part in pairs(parts) do
-				if part.Locked and not (part:FindFirstAncestorWhichIsA("Model") == clientCharacter and config.AllowLocalPlayerSelection) then
-					return Client, nil, ...
+		if (not Client) or core.getSecurityLevel(Client) < config.RankToBypass then
+			return Client, ActionName, ...
+		else
+			local clientCharacter = Client.Character
+			local parts = core.GetSyncModifyingParts(ActionName, ...)
+			if parts ~= nil then
+				for _, part in pairs(parts) do
+					if part.Locked and not (part:FindFirstAncestorWhichIsA("Model") == clientCharacter and config.AllowLocalPlayerSelection) then
+						return Client, nil, ...
+					end
 				end
 			end
+			return Client, ActionName, ...
 		end
-		return Client, ActionName, ...
 	end)
 end
 
@@ -59,6 +63,10 @@ DisableLockedF3XParts["InitRequirements"] = {
 	"addF3XAttachment",
 	"attachNewF3X",
 	["getSecurityLevel"] = false,
+}
+
+DisableLockedF3XParts["ServerRequirements"]= {
+	"GetSyncModifyingParts"
 }
 
 return DisableLockedF3XParts

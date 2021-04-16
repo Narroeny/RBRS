@@ -6,11 +6,11 @@ function UILibrary.client(core)
 	core.loadEnv(getfenv())
 	
 	core:addFunction("hideChat", function()
-		starterGui:SetCore("ChatActive", false)
+		StarterGui:SetCore("ChatActive", false)
 	end)
 	
 	core:addFunction("showChat", function()
-		starterGui:SetCore("ChatActive", true)
+		StarterGui:SetCore("ChatActive", true)
 	end)
 	
 	core:addFunction("calculateScrollSize", function(scrollFrame, padding, disableX) 
@@ -50,18 +50,18 @@ function UILibrary.client(core)
 			moveFrame = frame
 		end
 		
-		local inset = guiService:GetGuiInset()
+		local inset = GuiService:GetGuiInset()
 		if frame.AbsolutePosition.X < 0 then
 			moveFrame.Position += UDim2.new(0, -frame.AbsolutePosition.X, 0, 0)
-		elseif frame.AbsolutePosition.X + frame.AbsoluteSize.X > mouse.ViewSizeX then
-			moveFrame.Position = UDim2.new(0, mouse.ViewSizeX - frame.AbsoluteSize.X, 
+		elseif frame.AbsolutePosition.X + frame.AbsoluteSize.X > Mouse.ViewSizeX then
+			moveFrame.Position = UDim2.new(0, Mouse.ViewSizeX - frame.AbsoluteSize.X, 
 				frame.Position.Y.Scale, frame.Position.X.Offset) 
 		end
 		if frame.AbsolutePosition.Y < 0 then
 			moveFrame.Position += UDim2.new(0, 0, 0, -frame.AbsolutePosition.Y)
-		elseif frame.AbsolutePosition.Y + frame.AbsoluteSize.Y > mouse.ViewSizeY then
+		elseif frame.AbsolutePosition.Y + frame.AbsoluteSize.Y > Mouse.ViewSizeY then
 			moveFrame.Position = UDim2.new(frame.Position.X.Scale, frame.Position.X.Offset, 
-				0, mouse.ViewSizeY + inset.Y - frame.AbsoluteSize.Y) 
+				0, Mouse.ViewSizeY + inset.Y - frame.AbsoluteSize.Y) 
 		end
 	end)
 	
@@ -101,20 +101,20 @@ function UILibrary.client(core)
 			end
 		end)
 		
-		userInputService.InputChanged:Connect(function(inp)
+		UserInputService.InputChanged:Connect(function(inp)
 			if inp == inputObj and dragging then
 				local d = inp.Position - dragStart
-				local inset = guiService:GetGuiInset()
+				local inset = GuiService:GetGuiInset()
 				if (inp.Position.X - uiOffsetX) < 0 then
 					d = Vector2.new(-dragStart.X + uiOffsetX, d.Y)
-				elseif (inp.Position.X + (extentsObject.AbsoluteSize.X - uiOffsetX)) > (mouse.ViewSizeX) then
-					d = Vector2.new(mouse.ViewSizeX - dragStart.X - (extentsObject.AbsoluteSize.X - uiOffsetX), d.Y)
+				elseif (inp.Position.X + (extentsObject.AbsoluteSize.X - uiOffsetX)) > (Mouse.ViewSizeX) then
+					d = Vector2.new(Mouse.ViewSizeX - dragStart.X - (extentsObject.AbsoluteSize.X - uiOffsetX), d.Y)
 					-- dragStart.X, + uiOffsetX
 				end
 				if (inp.Position.Y - uiOffsetY) < 0 then
 					d = Vector2.new(d.X, -dragStart.Y + uiOffsetY)
-				elseif (inp.Position.Y + (extentsObject.AbsoluteSize.Y - uiOffsetY)) > (mouse.ViewSizeY + inset.Y) then
-					d = Vector2.new(d.X, mouse.ViewSizeY + inset.Y - dragStart.Y - (extentsObject.AbsoluteSize.Y - uiOffsetY))
+				elseif (inp.Position.Y + (extentsObject.AbsoluteSize.Y - uiOffsetY)) > (Mouse.ViewSizeY + inset.Y) then
+					d = Vector2.new(d.X, Mouse.ViewSizeY + inset.Y - dragStart.Y - (extentsObject.AbsoluteSize.Y - uiOffsetY))
 				end
 				dragFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
 			end

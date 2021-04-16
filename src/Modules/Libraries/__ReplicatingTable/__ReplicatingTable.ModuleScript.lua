@@ -80,10 +80,13 @@ function ReplicatingTable.client(core)
 					tab[i] = v
 				end
 				tab.Changed = nil
+				tab.__trueValues = nil
+				tab.__changedEvent:Destroy()
+				tab.__changedBind:Destroy()
+				tab.__replicateClient:Destroy()
 				tab.__changedEvent = nil
 				tab.__changedBind = nil
 				tab.__replicateClient = nil
-				tab.__trueValues = nil
 			else
 				tab.__trueValues = httpService:JSONDecode(updatedTab)
 				tab.__changedBind:Fire()

@@ -10,7 +10,7 @@ function CoreUI.client(core)
 	local ui = script:WaitForChild("RBRSUI", 5)
 	assert(ui ~= nil, "UI is missing from CoreUISlide!")
 	ui:Clone().Parent = script -- replace the UI
-	ui.Parent = playerGui
+	ui.Parent = PlayerGui
 	
 	core:setGlobal("UI", ui) -- set our UI global
 	
@@ -73,6 +73,8 @@ end
 
 CoreUI.ClientRequirements = {
 	"setMainPanel",
+	"hideChat",
+	"showChat",
 }
 
 return CoreUI

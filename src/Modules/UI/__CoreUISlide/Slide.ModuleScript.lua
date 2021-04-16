@@ -64,7 +64,7 @@ end
 
 function Slide:Reset()
 	-- Table values
-	self.Locked = false -- locks the UI closed
+	self.Locked = false -- variable for locking the ui closed
 
 	self.UIOpen = false -- final "is ui open" variable
 	self.ToggleOpen = false -- for when the button is clicked or something

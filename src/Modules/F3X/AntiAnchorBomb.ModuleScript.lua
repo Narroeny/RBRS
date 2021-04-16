@@ -36,7 +36,7 @@ function AntiAnchorBomb.server(core)
 		return clones, p, actionname, ...
 	end)
 	
-	players.PlayerRemoving:Connect(function(p)
+	Players.PlayerRemoving:Connect(function(p)
 		if anchoredParts[p.Name] ~= nil then
 			for _, part in pairs(anchoredParts[p.Name]) do
 				part.Anchored = true

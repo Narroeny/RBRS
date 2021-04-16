@@ -51,41 +51,41 @@ function Utility.init(core)
 		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
 		
 		for i, v in pairs({
-			chat = game:GetService("Chat"),
-			contentProvider = game:GetService("ContentProvider"),
-			debris = game:GetService("Debris"),
-			groupService = game:GetService("GroupService"),
-			lighting = game:GetService("Lighting"),
-			players = game:GetService("Players"),
-			replicatedStorage = game:GetService("ReplicatedStorage"),
-			runService = game:GetService("RunService"),
-			starterGui = game:GetService("StarterGui"),
-			starterPack = game:GetService("StarterPack"),
-			starterPlayer = game:GetService("StarterPlayer"),
-			teams = game:GetService("Teams"),
-			tweenService = game:GetService("TweenService"),
-			httpService = game:GetService("HttpService"),
+			Chat = game:GetService("Chat"),
+			ContentProvider = game:GetService("ContentProvider"),
+			Debris = game:GetService("Debris"),
+			GroupService = game:GetService("GroupService"),
+			Lighting = game:GetService("Lighting"),
+			Players = game:GetService("Players"),
+			ReplicatedStorage = game:GetService("ReplicatedStorage"),
+			RunService = game:GetService("RunService"),
+			StarterGui = game:GetService("StarterGui"),
+			StarterPack = game:GetService("StarterPack"),
+			StarterPlayer = game:GetService("StarterPlayer"),
+			Teams = game:GetService("Teams"),
+			TweenService = game:GetService("TweenService"),
+			HttpService = game:GetService("HttpService"),
 			}) do
 			env[i] = v
 		end
 		if runService:IsServer() then
 			for i, v in pairs({
-				dataStoreService = game:GetService("DataStoreService"),
-				serverStorage = game:GetService("ServerStorage"),
+				DataStoreService = game:GetService("DataStoreService"),
+				ServerStorage = game:GetService("ServerStorage"),
 				}) do
 			env[i] = v
 			end
 		else
 			local localPlayer = players.LocalPlayer
 			for i, v in pairs({
-				localPlayer = localPlayer,
-				backpack = localPlayer:WaitForChild("Backpack"),
-				character = localPlayer.Character or localPlayer.CharacterAdded:Wait(),
-				contextActionService = game:GetService("ContextActionService"),
-				guiService = game:GetService("GuiService"),
-				playerGui = localPlayer:WaitForChild("PlayerGui"),
-				userInputService = game:GetService("UserInputService"),
-				mouse = localPlayer:GetMouse(),
+				LocalPlayer = localPlayer,
+				Backpack = localPlayer:WaitForChild("Backpack"),
+				Character = localPlayer.Character or localPlayer.CharacterAdded:Wait(),
+				ContextActionService = game:GetService("ContextActionService"),
+				GuiService = game:GetService("GuiService"),
+				PlayerGui = localPlayer:WaitForChild("PlayerGui"),
+				UserInputService = game:GetService("UserInputService"),
+				Mouse = localPlayer:GetMouse(),
 				}) do
 				env[i] = v
 			end

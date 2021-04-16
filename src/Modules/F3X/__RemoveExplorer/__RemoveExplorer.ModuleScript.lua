@@ -20,12 +20,10 @@ end
 
 function RemoveF3XExplorer.server(core)
 	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
-		if core.getSecurityLevel(Client) < config.RankToBypass then
-			if ActionName == "SetLocked" or ActionName == "SetName" then
-				ActionName = nil
-			end
-			return Client, ActionName, ...
+		if core.getSecurityLevel(Client) < config.RankToBypass and (ActionName == "SetLocked" or ActionName == "SetName") then
+			ActionName = ""
 		end
+		return Client, ActionName, ...
 	end)
 end
 

@@ -1,6 +1,5 @@
 local RemoveF3XAnchor = {}
 local config = require(script:WaitForChild("Configuration"))
-print("asdf")
 
 function RemoveF3XAnchor.client(core)
 	--core:addFunction("addF3XAttachment", function(moduleName, functionName, typ, func, priority)
@@ -42,7 +41,7 @@ end
 function RemoveF3XAnchor.server(core)
 	core.addF3XAttachment("SyncModule", "PerformAction", "Before", function(Client, ActionName, ...)
 		if core.getSecurityLevel(Client) < config.RankToBypass then
-			if ActionName == "SetLocked" then
+			if ActionName == "SetAnchored" then
 				ActionName = nil
 			end
 			return Client, ActionName, ...

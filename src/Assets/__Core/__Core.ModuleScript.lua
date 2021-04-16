@@ -97,13 +97,13 @@ function Core.ProtectedFunctions:waitForGlobal(name)
 	coroutine.wrap(function()
 		wait(5)
 		if self.References[name] == nil then
-			warn("waitForGlobal call for " .. name .. " by " .. self.getCallingScript(getfenv()) .. " is yielding.")
+			warn("waitForGlobal call for " .. name .. " by " .. self.getCallingScript(getfenv()) .. " is still yielding.")
 		end
 	end)()
 	while self.References[name] == nil do
 		self.References.Changed:Wait()
-		return self.References[name]["Value"], self.References[name]["Priority"]
 	end
+	return self.References[name]["Value"], self.References[name]["Priority"]
 end
 
 function Core.ProtectedFunctions:setGlobal(name, value, priority)
@@ -182,6 +182,8 @@ function Core.ProtectedFunctions:init(moduleFolder)
 			game.Loaded:Wait()
 		end
 	end
+	
+	print("Initializing RBRS " .. Core.Version)
 	
 	-- Core has a requirement for Utility, so we init that first.
 	local priorityTable = script:WaitForChild("PriorityTable")

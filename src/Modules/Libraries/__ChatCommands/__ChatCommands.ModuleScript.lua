@@ -42,15 +42,15 @@ end
 
 function chatCommands.client(core)
 	core.loadEnv(getfenv())
-	chatCommands:chatHandler(localPlayer)
+	chatCommands:chatHandler(LocalPlayer)
 end
 
 function chatCommands.server(core) -- same as above but attaches to stuff
 	core.loadEnv(getfenv())
-	for _, p in pairs(players:GetPlayers()) do
+	for _, p in pairs(Players:GetPlayers()) do
 		chatCommands:chatHandler(p)
 	end
-	players.PlayerAdded:Connect(function(p)
+	Players.PlayerAdded:Connect(function(p)
 		chatCommands:chatHandler(p)
 	end)
 end

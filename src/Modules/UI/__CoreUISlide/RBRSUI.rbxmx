@@ -271,7 +271,7 @@
             <float name="TextStrokeTransparency">1</float>
             <float name="TextTransparency">0</float>
             <token name="TextTruncate">0</token>
-            <bool name="TextWrapped">false</bool>
+            <bool name="TextWrapped">true</bool>
             <token name="TextXAlignment">2</token>
             <token name="TextYAlignment">1</token>
             <bool name="Visible">true</bool>

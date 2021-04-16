@@ -66,7 +66,7 @@ function Remote.server(core)
 	end)
 	
 	event.OnServerEvent:Connect(function(p, tag, ...)
-		Remote.waitForListener(tag)
+		Remote.waitForListener(tag, 15, core)
 		Remote.Calls[tag].Function(p, ...)
 	end)
 	
@@ -85,7 +85,7 @@ function Remote.client(core)
 	core:addFunction("InvokeServer", function(self, tag, ...)
 		assert(typeof(self) == "table", 'Please call InvokeServer with ":" - ' .. core.getCallingScript(getfenv()))
 		return func:InvokeServer(tag, ...)
-end)
+	end)
 	
 	core:addFunction("FireServer", function(self, tag, ...)
 		assert(typeof(self) == "table", 'Please call FireServer with ":" - ' .. core.getCallingScript(getfenv()))
@@ -93,7 +93,7 @@ end)
 	end)
 	
 	event.OnClientEvent:Connect(function(tag, ...)
-		Remote.waitForListener(tag)
+		Remote.waitForListener(tag, 15, core)
 		Remote.Calls[tag].Function(...)
 	end)
 
