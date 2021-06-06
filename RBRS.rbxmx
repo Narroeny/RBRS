@@ -4644,46 +4644,30 @@ end
 function Attach.init(core)
 	Attach.Core = core
 	
-	core:addFunction("AttachBeforeRun", function(module, functionName, func, priority)
+	local function ProcessReq(module, functionName, func, priority, RunType)
 		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
 		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
 		Attach:loadModule(module)
 		local entry = Attach.Attachments[module]
 		Attach.initFuncTab(core, entry, module, functionName)
-		entry[functionName]:insert("BeforeRun", {
+		entry[functionName]:insert(RunType, {
 			["Function"] = func,
 			["Priority"] = priority, 
 			["Creator"] = core.getCallingScript(getfenv()),
 		})
 		return Attach.Attachments[module]
+	end
+	
+	core:addFunction("AttachBeforeRun", function(module, functionName, func, priority)
+		return ProcessReq(module, functionName, func, priority, "BeforeRun")
 	end)
 	
 	core:addFunction("AttachIntercept", function(module, functionName, func, priority)
-		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
-		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
-		Attach:loadModule(module)
-		local entry = Attach.Attachments[module]
-		Attach.initFuncTab(core, entry, module, functionName)
-		entry[functionName]["Run"] = {
-			["Function"] = func,
-			["Priority"] = priority, 
-			["Creator"] = core.getCallingScript(getfenv()),
-		}
-		return Attach.Attachments[module]
+		return ProcessReq(module, functionName, func, priority, "Run")
 	end)
 	
 	core:addFunction("AttachAfterRun", function(module, functionName, func, priority)
-		assert(typeof(functionName) == "string", "Invalid functionName from " .. core.getCallingScript(getfenv()))
-		assert(typeof(func) == "function", "Invalid function from " .. core.getCallingScript(getfenv()))
-		Attach:loadModule(module)
-		local entry = Attach.Attachments[module]
-		Attach.initFuncTab(core, entry, module, functionName)
-		entry[functionName]["AfterRun"] = {
-			["Function"] = func,
-			["Priority"] = priority, 
-			["Creator"] = core.getCallingScript(getfenv()),
-		}
-		return Attach.Attachments[module]
+		return ProcessReq(module, functionName, func, priority, "AfterRun")
 	end)
 	
 	core:addFunction("getAttachments", function(module)
