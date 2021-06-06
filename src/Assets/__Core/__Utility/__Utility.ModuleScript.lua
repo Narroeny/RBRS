@@ -4,8 +4,8 @@ Utility implements functions required by Core and generic functions required by 
 ]]
 local Utility = {}
 Utility["Description"] = "Provides utility functions for the sake of all modules."
-local runService = game:GetService("RunService")
-local players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
 
 local function getEnvironmentData(mainenv, name) -- actual code for both getCallingScript and getCallingEnv
 	local returnEnv = {}
@@ -29,8 +29,8 @@ local function getEnvironmentData(mainenv, name) -- actual code for both getCall
 	return returnEnv, returnCallingScript
 end
 
-function Utility.init(core)	
-	core:addFunction("getCallingEnv", function(env)
+function Utility.init(Core)	
+	Core:addFunction("getCallingEnv", function(env)
 		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingEnv")
 		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
 		
@@ -38,7 +38,7 @@ function Utility.init(core)
 		return retenv
 	end, 1, script:GetFullName())
 	
-	core:addFunction("getCallingScript", function(env)
+	Core:addFunction("getCallingScript", function(env)
 		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingScript")
 		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
 		
@@ -46,7 +46,7 @@ function Utility.init(core)
 		return name
 	end, 1, script:GetFullName())
 	
-	core:addFunction("loadEnv", function(env)
+	Core:addFunction("loadEnv", function(env)
 		local _, callerName = getEnvironmentData(getfenv(), "Utility.getCallingEnv")
 		assert(typeof(env) == "table", "Invalid environment passed from" .. callerName)
 		
@@ -68,7 +68,7 @@ function Utility.init(core)
 			}) do
 			env[i] = v
 		end
-		if runService:IsServer() then
+		if RunService:IsServer() then
 			for i, v in pairs({
 				DataStoreService = game:GetService("DataStoreService"),
 				ServerStorage = game:GetService("ServerStorage"),
@@ -76,25 +76,25 @@ function Utility.init(core)
 			env[i] = v
 			end
 		else
-			local localPlayer = players.LocalPlayer
+			local LocalPlayer = Players.LocalPlayer
 			for i, v in pairs({
-				LocalPlayer = localPlayer,
-				Backpack = localPlayer:WaitForChild("Backpack"),
-				Character = localPlayer.Character or localPlayer.CharacterAdded:Wait(),
+				LocalPlayer = LocalPlayer,
+				Backpack = LocalPlayer:WaitForChild("Backpack"),
+				Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait(),
 				ContextActionService = game:GetService("ContextActionService"),
 				GuiService = game:GetService("GuiService"),
-				PlayerGui = localPlayer:WaitForChild("PlayerGui"),
+				PlayerGui = LocalPlayer:WaitForChild("PlayerGui"),
 				UserInputService = game:GetService("UserInputService"),
-				Mouse = localPlayer:GetMouse(),
+				Mouse = LocalPlayer:GetMouse(),
 				}) do
 				env[i] = v
 			end
 		end
 	end)
 	
-	core:addFunction("getClientScript", function(plr)
-		if plr == nil and not runService:IsServer() then
-			plr = players.LocalPlayer
+	Core:addFunction("getClientScript", function(plr)
+		if plr == nil and not RunService:IsServer() then
+			plr = Players.LocalPlayer
 		else
 			return nil
 		end

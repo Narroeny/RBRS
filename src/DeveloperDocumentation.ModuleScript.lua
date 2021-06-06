@@ -3,7 +3,7 @@
 INSTALLATION INSTRUCTIONS:
 EASY:
 For easy installation, install/update the RBRS Setup Tool, which will help automatically configure your RBRS installation.
-https://www.roblox.com/library/5804626696/raidRoleplay-Updater
+https://www.roblox.com/library/5804626696/raidRoleplay-Updater -- not here yet
 
 ADVANCED:
 Configuration options for modules should be directly parented to the module itself. Go through each module, and find the configuration

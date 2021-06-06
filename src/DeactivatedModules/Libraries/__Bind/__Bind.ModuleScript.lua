@@ -1,4 +1,5 @@
--- Super simple library to allow bindables to be made and listened to
+-- Super simple library to allow bindables to be made and listened to. However, Signal is cooler so use that
+-- Need to replace this ye
 
 local Bind = {}
 local currentBinds = {}
