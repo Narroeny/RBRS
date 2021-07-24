@@ -23,5 +23,7 @@ https://discord.gg/K2GKHbUgaf
 DEVELOPERS:
 To work with the RBRS source, either insert a fresh model into your game, or use the provided RemodelRBXMXToDirectory.lua file with the Remodel utility to create a directory to work in with a RBXMX file from Roblox Studio. You can also use the provided RemodelDirectoryToRBXMX.lua utility to convert your local directory to an RBXMX for usage ingame and in Studio.
 
+Once you have finished, and have uploaded your modified version to a fork, make a pull request to be reviewed.
+
 Remodel can be found at:
 https://github.com/rojo-rbx/remodel
